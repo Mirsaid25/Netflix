@@ -6,19 +6,19 @@ const SectionOneItem: React.FC = () => {
 
   return (
     <div className="move_card">
-      <div
-        onMouseLeave={() => setHover(false)}
-        onMouseEnter={() => setHover(true)}
-        className="relative rounded-xl mb-[9px] overflow-hidden transition-all ease-in-out"
-      >
-        <Image
-          alt=""
-          src={"/image/main/image 1.svg"}
-          width={20}
-          height={20}
-          className="w-full"
-        />
-        {hover ? (
+        <div
+          onMouseLeave={() => setHover(false)}
+          onMouseEnter={() => setHover(true)}
+          className="relative rounded-xl mb-[9px] overflow-hidden transition-all ease-in-out"
+        >
+            <Image
+              alt=""
+              src={"image/main/image 1.svg"}
+              width={20}
+              height={20}
+              className="w-full"
+            />
+            {hover ? (
           <div className="w-full h-full transition-all ease-in-out bg-[#3658ff8f] absolute top-0 left-0 flex items-center justify-center">
             <button
               title="move_card"
@@ -27,13 +27,13 @@ const SectionOneItem: React.FC = () => {
               Карточка фильма
             </button>
           </div>
-        ) : null} 
-        <div className="bg-[#89CB36] px-[13px] py-[5px] max-lg:px-[7px] max-lg:py-[4px] max-sm:px-[5px] rounded-md absolute top-3 right-3 max-md:top-[10px] max-md:right-[10px] max-sm:top-[8px] max-sm:right-[8px]">
+            ) : null} 
+            <div className="bg-[#89CB36] px-[13px] py-[5px] max-lg:px-[7px] max-lg:py-[4px] max-sm:px-[5px] rounded-md absolute top-3 right-3 max-md:top-[10px] max-md:right-[10px] max-sm:top-[8px] max-sm:right-[8px]">
             <p className="text-white text-[18px] max-lg:text-[12px] font-bold text-center">6.70</p>
+            </div>
         </div>
-      </div>
-      <p className="text-white text-[18px] max-lg:text-[15px] font-bold mb-1">Побег из Претории</p>
-      <p className="text-[#F2F60F] text-[15px] max-lg:text-[12px]">Триллер</p>
+        <p className="text-white text-[18px] max-lg:text-[15px] font-bold mb-1">кино</p>
+        <p className="text-[#F2F60F] text-[15px] max-lg:text-[12px]">Триллер</p>
     </div>
   );
 };
