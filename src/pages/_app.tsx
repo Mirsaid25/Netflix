@@ -7,7 +7,7 @@ type arrPopularMoviesProps ={
 
 export default function App({ Component, pageProps }: AppProps) {
 
-  return (
+    return (
         <Component {...pageProps} />
 	)
 }
