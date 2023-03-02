@@ -1,7 +1,7 @@
 import SectionOneItem from "@/Components/index_child/sectionOneItem";
 import AppLayout from "@/Layouts/AppLayout";
 import { Inter } from "@next/font/google";
-import {useEffect, useState } from "react";
+import {useEffect, useMemo, useState } from "react";
 import { AiOutlineMinus } from 'react-icons/ai';
 import { IoMdMenu } from "react-icons/io";
 import { MdOutlineClose } from "react-icons/md";
@@ -45,8 +45,16 @@ export default function Home() {
 	const [arrSectionOne, setArrSectionOne] = useState<[]>([])
 	const [arrGanre, setArrGanre] = useState<[]>([])
 
+
 	const [arrPopular, setArrPopular] = useState<[]>([])
+	const [arrPopularReload, setArrPopularReload] = useState([])
 	const [plaginationNum, setPlaginationNum] = useState<number>(1)
+
+	const [popularPersonsArr, setPopularPersonsArr] = useState<[]>([])
+
+	console.log(popularPersonsArr);
+	
+
 
 	const [trailerKey, setTrailerKey] = useState<string>("yjRHZEUamCc")
 	
@@ -57,13 +65,92 @@ export default function Home() {
 	      .then(res => {setArr(res.data.results); setArrSectionOne(res.data.results)})
 
 		axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${APIkey}&language=en-US`)
-		.then(res => setArrGanre(res.data.genres))
+		    .then(res => setArrGanre(res.data.genres))
 
-		axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${APIkey}&language=en-US&page=${plaginationNum}`)
-		.then(res => setArrPopular(res.data.results))
+		// axios.get(`https://api.themoviedb.org/3/person/popular?api_key=${APIkey}&language=ru&page=1`)
+		//     .then(res => setPopularPerson(res.data.results))
+
+		// axios.get(`https://api.themoviedb.org/3/person/1253360?api_key=${APIkey}&language=en-US`)
+		//     .then(res => console.log(res.data))
+
+		// axios.get(`https://api.themoviedb.org/3/person/popular?api_key=${APIkey}&language=ru&page=1`)
+		// 	.then(res => {
+		// 		if(res.status === 200 || res.status === 201){
+		// 			res.data.results.slice(0,6).filter((item: any)=> {
+        //                 axios.get(`https://api.themoviedb.org/3/person/${item.id}?api_key=${APIkey}&language=en-US`)
+		//                     .then(res => {
+		// 						if(res.status === 200 || res.status === 201){
+		// 							setPopularPersonsArr(res.data)
+		// 						}
+		// 					})
+		// 		})
+		// 		}
+				
+		//     })
 
 	}, [])
 
+	// const popularPersons:[{name:string}] = useMemo(()=>{ 
+    //     let Arr:any = []
+
+	// 	axios.get(`https://api.themoviedb.org/3/person/popular?api_key=${APIkey}&language=ru&page=1`)
+	// 		.then(res => {
+	// 			res.data.results.slice(0,6).filter((item: any)=> {
+    //                 axios.get(`https://api.themoviedb.org/3/person/${item.id}?api_key=${APIkey}&language=en-US`)
+	// 	                .then(res => Arr.push(res.data))
+	// 			})
+	// 	    })
+	// 	return Arr
+	//  } ,[])
+	 
+	// {popularPersons.length > 0 ? console.log(popularPersons) : null}
+	// popularPersons.length > 0 ? popularPersons[0]?.name : "LOADING..."
+
+	// console.log(popularPersons);
+
+	// const popularPersons = (params:number) => {
+	// 	axios.get(`https://api.themoviedb.org/3/person/popular?api_key=${APIkey}&language=ru&page=1`)
+	// 		.then(res => { 
+	// 			    if(res.status === 200 || res.status === 201){
+	// 					axios.get(`https://api.themoviedb.org/3/person/${res.data.results[params].id}?api_key=${APIkey}&language=en-US`)
+	// 	                    .then(ress => {
+	// 					    	if(ress.status === 200 || ress.status === 201 && ress.data.name !== undefined){
+	// 								console.log(ress.data.name);
+	// 					    	    setT(ress.data.name)
+	// 					    	}
+	// 					    })
+	// 				}
+                    
+	// 			})
+	// }
+
+	console.log();
+	
+	
+	useEffect(() => {
+		axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${APIkey}&language=en-US&page=${plaginationNum}`)
+		.then(res => setArrPopular(res.data.results))
+	}, [plaginationNum])
+
+	useEffect(()=>{
+        setArrPopularReload(arrPopular)
+	}, [arrPopular])
+	
+// release_date
+
+    function filterPopularFilmsWithDate(e: React.ChangeEvent<any>){		
+		if(e.target.id !== "all"){
+			    const Arr =  arrPopular.filter((item :any)=>{
+                if(item.release_date.split("-").at(0) === e.target.id){
+                    return item
+			    }
+		    })
+		    setArrPopularReload(Arr)
+		} else(
+			setArrPopularReload(arrPopular)
+		)
+        
+	}
   
 	function trailSlider(id:number){
 		for(let item of arr){
@@ -115,13 +202,13 @@ export default function Home() {
 					{filterModalOne ? 
 					    <div className="absolute top-0 right-0 backdrop-blur-xl p-3 border-2 border-white flex flex-col gap-2 rounded-md z-10">
 					        <MdOutlineClose onClick={()=> setFilterModalOne(false)} size={25} className="absolute top-1 right-1 cursor-pointer" color="white"/>
-					        <span className="text-white cursor-pointer font-bold text-[15px]">Все</span>
-					    	<span className="text-[grey] cursor-pointer font-bold text-[15px]">Боевики</span>
-					    	<span className="text-[grey] cursor-pointer font-bold text-[15px]">Приключения</span>
-					    	<span className="text-[grey] cursor-pointer font-bold text-[15px]">Комедии</span>
-					    	<span className="text-[grey] cursor-pointer font-bold text-[15px]">Фантастика</span>
-					    	<span className="text-[grey] cursor-pointer font-bold text-[15px]">Триллеры</span>
-					    	<span className="text-[grey] cursor-pointer font-bold text-[15px]">Драма</span>
+					        <span onClick={(e)=> {filterFilmsWithGanre(e.target); setFilterModalOne(false)}} id="all" className="text-white cursor-pointer font-bold text-[15px]">Все</span>
+					    	<span onClick={(e)=> {filterFilmsWithGanre(e.target); setFilterModalOne(false)}} id="28" className="text-[grey] cursor-pointer font-bold text-[15px]">Боевики</span>
+					    	<span onClick={(e)=> {filterFilmsWithGanre(e.target); setFilterModalOne(false)}} id="12" className="text-[grey] cursor-pointer font-bold text-[15px]">Приключения</span>
+					    	<span onClick={(e)=> {filterFilmsWithGanre(e.target); setFilterModalOne(false)}} id="35" className="text-[grey] cursor-pointer font-bold text-[15px]">Комедии</span>
+					    	<span onClick={(e)=> {filterFilmsWithGanre(e.target); setFilterModalOne(false)}} id="878" className="text-[grey] cursor-pointer font-bold text-[15px]">Фантастика</span>
+					    	<span onClick={(e)=> {filterFilmsWithGanre(e.target); setFilterModalOne(false)}} id="53" className="text-[grey] cursor-pointer font-bold text-[15px]">Триллеры</span>
+					    	<span onClick={(e)=> {filterFilmsWithGanre(e.target); setFilterModalOne(false)}} id="18" className="text-[grey] cursor-pointer font-bold text-[15px]">Драма</span>
 					    </div> 
 						: null
 					}
@@ -192,33 +279,36 @@ export default function Home() {
 			    		<h1 className="text-white font-black text-[65px] max-[1580px]:text-[50px] max-xl:text-[40px] max-sm:text-[32px]">Популярные фильмы</h1>
 			    		<AiOutlineMinus size={60} color="white" className="max-[1765px]:hidden"/>
 			    		<div className="flex items-center gap-[25px] max-xl:gap-5 max-sm:hidden">
-			    			<span className="text-white cursor-pointer font-bold text-[18px] max-xl:text-[15px]">Всё время</span>
-			    			<span className="text-[grey] cursor-pointer font-bold text-[18px] max-xl:text-[15px]">2023</span>
-			    			<span className="text-[grey] cursor-pointer font-bold text-[18px] max-xl:text-[15px]">2022</span>
-			    			<span className="text-[grey] cursor-pointer font-bold text-[18px] max-xl:text-[15px]">2021</span>
-			    			<span className="text-[grey] cursor-pointer font-bold text-[18px] max-xl:text-[15px]">2020</span>
-			    			<span className="text-[grey] cursor-pointer font-bold text-[18px] max-xl:text-[15px]">2019</span>
-			    			<span className="text-[grey] cursor-pointer font-bold text-[18px] max-xl:text-[15px]">2018</span>
+			    			<span id="all"  onClick={filterPopularFilmsWithDate} className="text-[grey] hover:text-white cursor-pointer font-bold text-[18px] max-xl:text-[15px]">Всё время</span>
+			    			<span id="2023" onClick={filterPopularFilmsWithDate}  className="text-[grey] hover:text-white cursor-pointer font-bold text-[18px] max-xl:text-[15px]">2023</span>
+			    			<span id="2022" onClick={filterPopularFilmsWithDate}  className="text-[grey] hover:text-white cursor-pointer font-bold text-[18px] max-xl:text-[15px]">2022</span>
+			    			<span id="2021" onClick={filterPopularFilmsWithDate}  className="text-[grey] hover:text-white cursor-pointer font-bold text-[18px] max-xl:text-[15px]">2021</span>
+			    			<span id="2020" onClick={filterPopularFilmsWithDate}  className="text-[grey] hover:text-white cursor-pointer font-bold text-[18px] max-xl:text-[15px]">2020</span>
+			    			<span id="2019" onClick={filterPopularFilmsWithDate}  className="text-[grey] hover:text-white cursor-pointer font-bold text-[18px] max-xl:text-[15px]">2019</span>
+			    			<span id="2018" onClick={filterPopularFilmsWithDate}  className="text-[grey] hover:text-white cursor-pointer font-bold text-[18px] max-xl:text-[15px]">2018</span>
 			    		</div>
 			    		<IoMdMenu color="white" onClick={()=> setFilterModalTwo(true)} size={25} className="hidden max-sm:block cursor-pointer"/>
 			    		{filterModalTwo ? 
 			    		    <div className="absolute top-0 right-0 backdrop-blur-xl p-5 pr-8 border-2 border-white flex flex-col gap-2 rounded-md z-10">
 			    		        <MdOutlineClose onClick={()=> setFilterModalTwo(false)} size={25} className="absolute top-1 right-1 cursor-pointer" color="white"/>
-			    		        <span className="text-white cursor-pointer font-bold text-[15px]">Всё</span>
-			    		    	<span className="text-[grey] cursor-pointer font-bold text-[15px]">2023</span>
-			    		    	<span className="text-[grey] cursor-pointer font-bold text-[15px]">2022</span>
-			    		    	<span className="text-[grey] cursor-pointer font-bold text-[15px]">2021</span>
-			    		    	<span className="text-[grey] cursor-pointer font-bold text-[15px]">2020</span>
-			    		    	<span className="text-[grey] cursor-pointer font-bold text-[15px]">2019</span>
-			    		    	<span className="text-[grey] cursor-pointer font-bold text-[15px]">2018</span>
+			    		        <span id="all"  onClick={(e)=>{filterPopularFilmsWithDate(e); setFilterModalTwo(false)}} className="text-[grey] hover:text-white cursor-pointer font-bold text-[15px]">Всё</span>
+			    		    	<span id="2023" onClick={(e)=>{filterPopularFilmsWithDate(e); setFilterModalTwo(false)}} className="text-[grey] hover:text-white cursor-pointer font-bold text-[15px]">2023</span>
+			    		    	<span id="2022" onClick={(e)=>{filterPopularFilmsWithDate(e); setFilterModalTwo(false)}} className="text-[grey] hover:text-white cursor-pointer font-bold text-[15px]">2022</span>
+			    		    	<span id="2021" onClick={(e)=>{filterPopularFilmsWithDate(e); setFilterModalTwo(false)}} className="text-[grey] hover:text-white cursor-pointer font-bold text-[15px]">2021</span>
+			    		    	<span id="2020" onClick={(e)=>{filterPopularFilmsWithDate(e); setFilterModalTwo(false)}} className="text-[grey] hover:text-white cursor-pointer font-bold text-[15px]">2020</span>
+			    		    	<span id="2019" onClick={(e)=>{filterPopularFilmsWithDate(e); setFilterModalTwo(false)}} className="text-[grey] hover:text-white cursor-pointer font-bold text-[15px]">2019</span>
+			    		    	<span id="2018" onClick={(e)=>{filterPopularFilmsWithDate(e); setFilterModalTwo(false)}} className="text-[grey] hover:text-white cursor-pointer font-bold text-[15px]">2018</span>
 			    		    </div> 
 			    			: null
 			    		}
 				</div>
-				<div className="grid grid-cols-4 mb-5 gap-3">
-					{arrPopular !== undefined ? arrPopular.slice(0,8).map((item:{id:number, popularity: number; backdrop_path: string; original_title: string; genre_ids: []; })=> <SectionOneItem key={item.id} arrId={arrGanre} arr={item}/> ) : null}
+				<div className="grid grid-cols-4 max-md:grid-cols-3 max-sm:grid-cols-2 mb-5 gap-3">
+                    {arrPopularReload !== undefined && arrPopularReload.length !== 0 ? arrPopularReload.slice(0,8).map((item:{id:number, popularity: number; backdrop_path: string; original_title: string; genre_ids: []; })=> <SectionOneItem key={item.id} arrId={arrGanre} arr={item}/> ) : null}				    
+					{arrPopularReload !== undefined && arrPopularReload.length !== 0 && size !== null && size < 768 && size >= 640  ? arrPopularReload.slice(0,6).map((item:{id:number, popularity: number; backdrop_path: string; original_title: string; genre_ids: []; })=> <SectionOneItem key={item.id} arrId={arrGanre} arr={item}/> ) : null}
+					{arrPopularReload !== undefined && arrPopularReload.length !== 0 && size !== null && size < 640  ? arrPopularReload.slice(0,4).map((item:{id:number, popularity: number; backdrop_path: string; original_title: string; genre_ids: []; })=> <SectionOneItem key={item.id} arrId={arrGanre} arr={item}/> ) : null}
+					{arrPopularReload.length === 0  ? (<p className="text-white transition ease-in-out cursor-pointer font-bold text-[18px] max-xl:text-[15px] w-full">К сожалению нричего не найденно😔</p>): null}
 				</div>
-				<div className="flex items-center justify-center">
+				<div className="flex items-center justify-center text-white">
 				    <Pagination count={20} variant="text" onChange={handleChange} size="large" color="primary" />
 				</div>
 			</section>
@@ -228,7 +318,7 @@ export default function Home() {
                     <div className="h-[444px] max-xl:h-[300px] max-lg:h-[300px] max-md:h-[321px] max-sm:h-[250px] max-[425px]:h-[180px] py-3 px-4 rounded-xl w-full bg-[url('/image/main/opularPerson1.jpg')] bg-no-repeat bg-cover bg-center flex flex-col items-start justify-between">
                         <p className="text-[#F2F60F] text-[15px] max-lg:text-[12px] font-medium">1-е место</p>
 						<div className="flex flex-col justify-start">
-                            <h1 className="text-white text-[27px] max-lg:text-[20px] max-sm:text-[17px] font-bold max-[425px]:font-medium">Дженна Ортега</h1>
+                            <h1 className="text-white text-[27px] max-lg:text-[20px] max-sm:text-[17px] font-bold max-[425px]:font-medium">{}</h1>
 							<p className="text-[#5A5B5CFF] text-[27px] max-lg:text-[15px] max-[425px]:text-[11px] font-bold max-[425px]:font-semibold">Jenna Ortega</p>
 							<span className="text-[#F2F60F] text-[15px] max-lg:text-[12px] max-[425px]:text-[10px] font-medium">20 лет</span>
 						</div>
