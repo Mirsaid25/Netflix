@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { type } from "os";
 import React, { useState } from "react";
 
@@ -7,7 +8,8 @@ type SectionOneItemProps= {
 	popularity: number;
 	backdrop_path: string,
 	original_title: string,
-	genre_ids:[]
+	genre_ids:[],
+  id:number
   },
   arrId:[]
 }
@@ -30,15 +32,17 @@ const SectionOneItem: React.FC<SectionOneItemProps> = ({arr, arrId}) => {
           onMouseEnter={() => setHover(true)}
           className="relative rounded-xl mb-[9px] overflow-hidden transition-all ease-in-out"
         >
-			<img src={`https://www.themoviedb.org/t/p/w220_and_h330_face/${arr?.backdrop_path}`} className="w-full" alt="" />
+			<img width={100} height={10} src={`https://www.themoviedb.org/t/p/w220_and_h330_face/${arr?.backdrop_path}`} className="w-full" alt="" />
             {hover ? (
           <div className="w-full h-full transition-all ease-in-out bg-[#3658ff8f] absolute top-0 left-0 flex items-center justify-center">
-            <button
-              title="move_card"
-              className="bg-white cursor-pointer px-[40px] py-[20px] max-xl:px-[17px] max-xl:py-[13px] max-sm:px-[14px] max-sm:py-[11px]  rounded-[10px] text-[#3657CB] text-[18px] max-xl:text-[15px] max-sm:text-[13px] max-[330px]:text-[11px] font-bold"
-            >
-              Карточка фильма
-            </button>
+            <Link href={`/filmcard/${arr.id}`}>
+                <button
+                  title="move_card"
+                  className="bg-white cursor-pointer px-[40px] py-[20px] max-xl:px-[17px] max-xl:py-[13px] max-sm:px-[14px] max-sm:py-[11px]  rounded-[10px] text-[#3657CB] text-[18px] max-xl:text-[15px] max-sm:text-[13px] max-[330px]:text-[11px] font-bold"
+                >
+                  Карточка фильма
+                </button>
+            </Link>
           </div>
             ) : null} 
             <div className="bg-[#89CB36] px-[13px] py-[5px] max-lg:px-[7px] max-lg:py-[4px] max-sm:px-[5px] rounded-md absolute top-3 right-3 max-md:top-[10px] max-md:right-[10px] max-sm:top-[8px] max-sm:right-[8px]">

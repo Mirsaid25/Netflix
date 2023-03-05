@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useState } from "react";
 import Header from "@/Components/Header";
 import { BsArrowUp} from 'react-icons/bs'
 import HeaderModal from "@/Components/headerModal";

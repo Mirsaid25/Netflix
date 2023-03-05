@@ -1,7 +1,7 @@
 import SectionOneItem from "@/Components/index_child/sectionOneItem";
 import AppLayout from "@/Layouts/AppLayout";
 import { Inter } from "@next/font/google";
-import {useEffect, useMemo, useState } from "react";
+import {useEffect, useState } from "react";
 import { AiOutlineMinus } from 'react-icons/ai';
 import { IoMdMenu } from "react-icons/io";
 import { MdOutlineClose } from "react-icons/md";
@@ -50,12 +50,8 @@ export default function Home() {
 	const [arrPopularReload, setArrPopularReload] = useState([])
 	const [plaginationNum, setPlaginationNum] = useState<number>(1)
 
-	const [popularPersonsArr, setPopularPersonsArr] = useState<[]>([])
-
-	console.log(popularPersonsArr);
+	const [popularPersonsArr, setPopularPersonsArr] = useState<any>([{name:"loading",profile_path:"loading" }])
 	
-
-
 	const [trailerKey, setTrailerKey] = useState<string>("yjRHZEUamCc")
 	
 	const size:number|null = useWindowSize().innerWidth
@@ -67,64 +63,10 @@ export default function Home() {
 		axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${APIkey}&language=en-US`)
 		    .then(res => setArrGanre(res.data.genres))
 
-		// axios.get(`https://api.themoviedb.org/3/person/popular?api_key=${APIkey}&language=ru&page=1`)
-		//     .then(res => setPopularPerson(res.data.results))
-
-		// axios.get(`https://api.themoviedb.org/3/person/1253360?api_key=${APIkey}&language=en-US`)
-		//     .then(res => console.log(res.data))
-
-		// axios.get(`https://api.themoviedb.org/3/person/popular?api_key=${APIkey}&language=ru&page=1`)
-		// 	.then(res => {
-		// 		if(res.status === 200 || res.status === 201){
-		// 			res.data.results.slice(0,6).filter((item: any)=> {
-        //                 axios.get(`https://api.themoviedb.org/3/person/${item.id}?api_key=${APIkey}&language=en-US`)
-		//                     .then(res => {
-		// 						if(res.status === 200 || res.status === 201){
-		// 							setPopularPersonsArr(res.data)
-		// 						}
-		// 					})
-		// 		})
-		// 		}
-				
-		//     })
+		axios.get(`https://api.themoviedb.org/3/person/popular?api_key=${APIkey}&language=rus&page=1`)
+		    .then(res => setPopularPersonsArr(res.data.results))
 
 	}, [])
-
-	// const popularPersons:[{name:string}] = useMemo(()=>{ 
-    //     let Arr:any = []
-
-	// 	axios.get(`https://api.themoviedb.org/3/person/popular?api_key=${APIkey}&language=ru&page=1`)
-	// 		.then(res => {
-	// 			res.data.results.slice(0,6).filter((item: any)=> {
-    //                 axios.get(`https://api.themoviedb.org/3/person/${item.id}?api_key=${APIkey}&language=en-US`)
-	// 	                .then(res => Arr.push(res.data))
-	// 			})
-	// 	    })
-	// 	return Arr
-	//  } ,[])
-	 
-	// {popularPersons.length > 0 ? console.log(popularPersons) : null}
-	// popularPersons.length > 0 ? popularPersons[0]?.name : "LOADING..."
-
-	// console.log(popularPersons);
-
-	// const popularPersons = (params:number) => {
-	// 	axios.get(`https://api.themoviedb.org/3/person/popular?api_key=${APIkey}&language=ru&page=1`)
-	// 		.then(res => { 
-	// 			    if(res.status === 200 || res.status === 201){
-	// 					axios.get(`https://api.themoviedb.org/3/person/${res.data.results[params].id}?api_key=${APIkey}&language=en-US`)
-	// 	                    .then(ress => {
-	// 					    	if(ress.status === 200 || ress.status === 201 && ress.data.name !== undefined){
-	// 								console.log(ress.data.name);
-	// 					    	    setT(ress.data.name)
-	// 					    	}
-	// 					    })
-	// 				}
-                    
-	// 			})
-	// }
-
-	console.log();
 	
 	
 	useEffect(() => {
@@ -183,6 +125,8 @@ export default function Home() {
 		}))
 	}
 
+	// profile_path
+
     return (
         <AppLayout>
 			<section className="section1 flex flex-col justify-center mb-14 max-md:mb-6 max-sm:mb-8">
@@ -220,7 +164,7 @@ export default function Home() {
 				</div>
 				<button className="border-2 border-white px-11 max-lg:px-[34px] max-md:px-[32px] py-5 max-lg:py-[16px] max-md:py-[11px] rounded-xl text-white text-lg max-lg:text-base font-bold m-auto" title="Все новинки">Все новинки</button>
 			</section>
-			<section className="section2 mb-[75px]">``
+			<section className="section2 mb-[75px]">
 				<div className="flex items-center justify-between mb-[40px] max-sm:flex-col max-sm:gap-2 max-sm:mb-2">
 					<h1 className="text-white font-black text-[65px] max-[1580px]:text-[50px] max-xl:text-[40px] max-sm:text-[32px]">Новые трейлеры</h1>
 					<div className="flex items-center gap-5 cursor-pointer">
@@ -315,70 +259,84 @@ export default function Home() {
 			<section className="section4 mb-[65px]">
 			    <h1 className="text-white font-black text-[65px] max-[1580px]:text-[50px] max-xl:text-[40px] max-sm:text-[32px] mb-[30px]">Популярные персоны</h1>
 				<div className="grid grid-cols-3 max-lg:grid-cols-2 gap-5 max-md:gap-3">
-                    <div className="h-[444px] max-xl:h-[300px] max-lg:h-[300px] max-md:h-[321px] max-sm:h-[250px] max-[425px]:h-[180px] py-3 px-4 rounded-xl w-full bg-[url('/image/main/opularPerson1.jpg')] bg-no-repeat bg-cover bg-center flex flex-col items-start justify-between">
+                    <div className={"h-[444px] overflow-hidden relative max-xl:h-[300px] max-lg:h-[300px] max-md:h-[321px] max-sm:h-[250px] max-[425px]:h-[180px] py-3 px-4 rounded-xl w-full  bg-no-repeat bg-cover bg-center flex flex-col items-start justify-between"}>
+						{popularPersonsArr.length > 1 ? 
+						    <img className="w-full h-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-[1]" src={`https://www.themoviedb.org/t/p/w220_and_h330_face/${popularPersonsArr[0].profile_path}`} alt="" />
+						:
+						    null
+					    }
                         <p className="text-[#F2F60F] text-[15px] max-lg:text-[12px] font-medium">1-е место</p>
 						<div className="flex flex-col justify-start">
-                            <h1 className="text-white text-[27px] max-lg:text-[20px] max-sm:text-[17px] font-bold max-[425px]:font-medium">{}</h1>
-							<p className="text-[#5A5B5CFF] text-[27px] max-lg:text-[15px] max-[425px]:text-[11px] font-bold max-[425px]:font-semibold">Jenna Ortega</p>
-							<span className="text-[#F2F60F] text-[15px] max-lg:text-[12px] max-[425px]:text-[10px] font-medium">20 лет</span>
+                            <h1 className="text-white text-[27px] max-lg:text-[20px] max-sm:text-[17px] font-bold max-[425px]:font-medium">{popularPersonsArr.length >0 ? popularPersonsArr[0].name : "loading..."}</h1>
+							{/* <p className="text-[#5A5B5CFF] text-[27px] max-lg:text-[15px] max-[425px]:text-[11px] font-bold max-[425px]:font-semibold">{popularPersonsArrEn.length >0 ? popularPersonsArrEn[0].name : "loading..."}</p> */}
+							{/* <span className="text-[#F2F60F] text-[15px] max-lg:text-[12px] max-[425px]:text-[10px] font-medium">20 лет</span> */}
 						</div>
 					</div>
-					<div className="h-[444px] max-xl:h-[300px] max-lg:h-[300px] max-md:h-[321px] max-sm:h-[250px] max-[425px]:h-[180px] py-3 px-4 rounded-xl w-full bg-[url('/image/main/popularPerson2.jpg')] bg-no-repeat bg-cover bg-center flex flex-col items-start justify-between">
+					<div className={`h-[444px] overflow-hidden relative max-xl:h-[300px] max-lg:h-[300px] max-md:h-[321px] max-sm:h-[250px] max-[425px]:h-[180px] py-3 px-4 rounded-xl w-full bg-no-repeat bg-cover bg-center flex flex-col items-start justify-between`}>
+					    {popularPersonsArr.length > 1 ? 
+						    <img className="w-full h-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-[1]" src={`https://www.themoviedb.org/t/p/w220_and_h330_face/${popularPersonsArr[1].profile_path}`} alt="" />
+						:
+						    null
+					    }
                         <p className="text-[#F2F60F] text-[15px] max-lg:text-[12px] font-medium">2-е место</p>
 						<div className="flex flex-col justify-start">
-                            <h1 className="text-white text-[27px] max-lg:text-[20px] max-sm:text-[17px] max-[425px]:text-[15px] font-bold max-[425px]:font-medium">Джейсон Стейтем</h1>
-							<p className="text-[#5A5B5CFF] text-[27px] max-lg:text-[15px] max-[425px]:text-[11px] font-bold max-[425px]:font-semibold">Jason Statham</p>
-							<span className="text-[#F2F60F] text-[15px] max-lg:text-[12px] max-[425px]:text-[10px] font-medium">52 года</span>
+                            <h1 className="text-white text-[27px] max-lg:text-[20px] max-sm:text-[17px] max-[425px]:text-[15px] font-bold max-[425px]:font-medium">{popularPersonsArr.length >1 ? popularPersonsArr[1].name : "loading..."}</h1>
+							{/* <p className="text-[#5A5B5CFF] text-[27px] max-lg:text-[15px] max-[425px]:text-[11px] font-bold max-[425px]:font-semibold">Jason Statham</p>
+							<span className="text-[#F2F60F] text-[15px] max-lg:text-[12px] max-[425px]:text-[10px] font-medium">52 года</span> */}
 						</div>
 					</div>
 					<div className="h-[444px] max-xl:h-[300px] max-lg:h-auto bg-[#1B2133] rounded-xl p-[30px] max-xl:p-4 max-lg:col-start-1 max-lg:col-end-3 overflow-hidden">
 						<div className="mb-[14px] max-xl:mb-2">
-							<div className="flex justify-between items-center mb-3 max-xl:mb-2">
-                                <div>
-							    	<p className="text-[20px] text-white font-bold max-xl:text-[15px]">Ольга Павловец</p>
-							    	<p className="text-[15px] text-[#3B486B] font-semibold max-xl:text-[11px]">Olga Pavlovets</p>
-							    	<p className="text-[14px] text-[#F2F60F] max-xl:text-[11px]">41 лет</p>
-							    </div>
+							<div className="flex justify-between gap-2 items-center mb-3 max-xl:mb-2">
+							    {popularPersonsArr.length > 1 ? 
+						            <img className="w-[60px] h-[80px]" src={`https://www.themoviedb.org/t/p/w220_and_h330_face/${popularPersonsArr[2].profile_path}`} alt="" />
+						            :
+						            null
+					            }
+							    <p className="text-[20px] text-white font-bold max-xl:text-[15px]">{popularPersonsArr.length >1 ? popularPersonsArr[2].name : "loading..."}</p>
 							    <p className="text-[15px] text-[#F2F60F] font-semibold">3-е место</p>
 						    </div>
 						    <hr className="border-2 border-[#1E2538]"/>
 						</div>
                         <div className="mb-[14px] max-xl:mb-2">
-							<div className="flex justify-between items-center mb-3 max-xl:mb-2">
-                                <div>
-							    	<p className="text-[20px] text-white font-bold max-xl:text-[15px]">Павел Прилучный</p>
-							    	<p className="text-[15px] text-[#3B486B] font-semibold max-xl:text-[11px]">Pavel Priluchnyy</p>
-							    	<p className="text-[14px] text-[#F2F60F] max-xl:text-[11px]">35 лет</p>
-							    </div>
+							<div className="flex gap-2 justify-between items-center mb-3 max-xl:mb-2">
+							    {popularPersonsArr.length > 1 ? 
+						            <img className="w-[60px] h-[80px]" src={`https://www.themoviedb.org/t/p/w220_and_h330_face/${popularPersonsArr[3].profile_path}`} alt="" />
+						            :
+						            null
+					            }
+							    <p className="text-[20px] text-white font-bold max-xl:text-[15px]">{popularPersonsArr.length > 1 ? popularPersonsArr[3].name : "loading..."}</p>
 							    <p className="text-[15px] text-[#F2F60F] font-semibold">4-е место</p>
 						    </div>
 						    <hr className="border-2 border-[#1E2538]"/>
 						</div>
 						<div className="mb-[14px] max-xl:mb-2">
-							<div className="flex justify-between items-center mb-3 max-xl:mb-2">
-                                <div>
-							    	<p className="text-[20px] text-white font-bold max-xl:text-[15px]">Джеки Чан</p>
-							    	<p className="text-[15px] text-[#3B486B] font-semibold max-xl:text-[11px]">Jackie Chan</p>
-							    	<p className="text-[14px] text-[#F2F60F] max-xl:text-[11px]">68 лет</p>
-							    </div>
-							    	<p className="text-[15px] text-[#F2F60F] font-semibold">5-е место</p>
+							<div className="flex gap-2 justify-between items-center mb-3 max-xl:mb-2">
+							    {popularPersonsArr.length > 1 ? 
+						            <img className="w-[60px] h-[80px]" src={`https://www.themoviedb.org/t/p/w220_and_h330_face/${popularPersonsArr[4].profile_path}`} alt="" />
+						            :
+						            null
+					            }
+							    <p className="text-[20px] text-white font-bold max-xl:text-[15px]">{popularPersonsArr.length > 1 ? popularPersonsArr[4].name : "loading..."}</p>
+							    <p className="text-[15px] text-[#F2F60F] font-semibold">5-е место</p>
 						    </div>
 						    <hr className="border-2 border-[#1E2538]"/>
 						</div>
 						<div>
-							<div className="flex justify-between items-center mb-3 max-xl:mb-2">
-                                <div>
-							    	<p className="text-[20px] text-white font-bold max-xl:text-[15px]">Шах Рукх Кхан</p>
-							    	<p className="text-[15px] text-[#3B486B] font-semibold max-xl:text-[11px]">Shah Rukh Khan</p>
-							    	<p className="text-[14px] text-[#F2F60F] max-xl:text-[11px]">57 лет</p>
-							    </div>
-							<p className="text-[15px] text-[#F2F60F] font-semibold">6-е место</p>
+							<div className="flex gap-2 justify-between items-center mb-3 max-xl:mb-2">
+							    {popularPersonsArr.length > 1 ? 
+						            <img className="w-[60px] h-[80px]" src={`https://www.themoviedb.org/t/p/w220_and_h330_face/${popularPersonsArr[5].profile_path}`} alt="" />
+						            :
+						            null
+					            }
+							    <p className="text-[20px] text-white font-bold max-xl:text-[15px]">{popularPersonsArr.length > 1 ? popularPersonsArr[5].name : "loading..."}</p>
+						     	<p className="text-[15px] text-[#F2F60F] font-semibold">6-е место</p>
 						    </div>
 						</div>
 					</div>
 				</div>
 			</section>
-			<section className="section5 mb-[65px]">
+			{/* <section className="section5 mb-[65px]">
 			    <div className="flex items-center justify-between mb-[40px] max-sm:flex-col max-sm:gap-2 max-sm:mb-2">
 					<h1 className="text-white font-black text-[65px] max-[1580px]:text-[50px] max-xl:text-[40px] max-sm:text-[32px]">Последние новости</h1>
 					<div className="flex items-center gap-5 cursor-pointer">
@@ -401,7 +359,7 @@ export default function Home() {
                         <SectionFiveItem/>
 					</div>
 				</div>
-			</section>
+			</section> */}
         </AppLayout>
   );
 }
