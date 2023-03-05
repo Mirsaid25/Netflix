@@ -19,7 +19,7 @@ import { createTheme, Pagination } from '@mui/material'
 import SectionFiveItem from "@/Components/index_child/sectionFiveItem";
 import axios from "axios";
 
-const APIkey = "d8c00e564262e291fb38f263b4c7128e"
+export const APIkey = "d8c00e564262e291fb38f263b4c7128e"
 
 const inter = Inter({ subsets: ["latin"] });
 
