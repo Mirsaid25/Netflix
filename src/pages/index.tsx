@@ -336,7 +336,7 @@ export default function Home() {
 					</div>
 				</div>
 			</section>
-			{/* <section className="section5 mb-[65px]">
+			<section className="section5 mb-[65px]">
 			    <div className="flex items-center justify-between mb-[40px] max-sm:flex-col max-sm:gap-2 max-sm:mb-2">
 					<h1 className="text-white font-black text-[65px] max-[1580px]:text-[50px] max-xl:text-[40px] max-sm:text-[32px]">Последние новости</h1>
 					<div className="flex items-center gap-5 cursor-pointer">
@@ -345,7 +345,7 @@ export default function Home() {
 					</div>
 				</div>
 				<div className="grid grid-cols-7 gap-4">
-                    <div className={"bg-[red] col-start-1 col-end-6 max-xl:col-end-8 rounded-[10px] h-auto bg-cover relative overflow-hidden flex items-center justify-center"}>
+                    <div className={"col-start-1 col-end-6 max-xl:col-end-8 rounded-[10px] h-auto bg-cover relative overflow-hidden flex items-center justify-center"}>
                         <Image src={"/image/main/Фото.svg"} alt="" height={100} width={100} className={"w-full h-full"}/>
 						<p className="absolute top-[40px] max-lg:top-[30px] left-[30px] max-lg:left-[25px] text-white text-[15px] font-bold">15 Апр 2020</p>
 						<div className="absolute bottom-[40px] max-lg:bottom-[30px] left-[30px] max-lg:left-[25px] max-md:bottom-3 w-[80%]">
@@ -353,13 +353,13 @@ export default function Home() {
 							<p className="text-white text-[20px] max-xl:text-[18px] font-medium max-md:text-[16px] max-sm:hidden">Но действия представителей оппозиции в равной степени предоставлены сами себе. В рамках спецификации современных стандартов, стремящиеся вытеснить традиционное производство, нанотехнологии указаны как претенденты на роль ключевых факторов.</p>
 						</div>
 					</div>
-					<div className="bg-[blue] row-start-1 max-xl:row-start-2 max-xl:row-end-6 row-end-auto col-start-6 col-end-8 max-xl:col-start-1 max-xl:col-end-8 grid grid-rows-3 max-xl:grid-rows-none max-xl:grid-cols-3 max-sm:grid-cols-2 gap-3 px-[37px] max-2xl:px-[30px] max-xl:p-0">
+					<div className="row-start-1 max-xl:row-start-2 max-xl:row-end-6 row-end-auto col-start-6 col-end-8 max-xl:col-start-1 max-xl:col-end-8 grid grid-rows-3 max-xl:grid-rows-none max-xl:grid-cols-3 max-sm:grid-cols-2 gap-3 px-[37px] max-2xl:px-[30px] max-xl:p-0">
                         <SectionFiveItem/>
                         <SectionFiveItem/>
                         <SectionFiveItem/>
 					</div>
 				</div>
-			</section> */}
+			</section>
         </AppLayout>
   );
 }
