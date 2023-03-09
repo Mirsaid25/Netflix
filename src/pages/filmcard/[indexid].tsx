@@ -74,10 +74,9 @@ function index() {
 	}, [])
 
 	console.log(moveInfo);
-	
-	
+		
 	// production_countries
-	
+
   return (
     <AppLayout>
         <section className='px-[100px]'>
