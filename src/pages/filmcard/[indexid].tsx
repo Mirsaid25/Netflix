@@ -77,7 +77,6 @@ function index() {
 		
 	// production_countries
 
-	
   return (
     <AppLayout>
         <section className='px-[100px]'>
