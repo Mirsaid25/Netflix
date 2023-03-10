@@ -25,6 +25,16 @@ type moveInfoT = {
 	]
 }
 
+type moveCrewT ={
+	cast:[
+		{
+			name: string,
+			profile_path: string,
+			known_for_department:string
+		}
+	]
+}
+
 export const data = {
 	datasets: [
 	  {
@@ -45,6 +55,7 @@ export const data = {
 
 function index() {	
 	const [moveInfo, setMoveInfo] = useState<moveInfoT>()
+	const [moveCrew, setMoveCrew] = useState<moveCrewT>()
 
 
 	function GetId() {
@@ -64,25 +75,34 @@ function index() {
 			}
 		})
 
-		// axios.get(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${APIkey}&language=en-US`)
-	    // .then(res=> {
-		// 	if(res.status === 200 || res.status === 201){
-		// 		console.log(res.data);
+		axios.get(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${APIkey}&append_to_response=videos,images`)
+	    .then(res=> {
+			if(res.status === 200 || res.status === 201){
+				setMoveCrew(res.data);
 				
-		// 	}
-		// })
+			}
+		})
 	}, [])
 
-	console.log(moveInfo);
+	console.log(moveCrew);
 		
-	// production_countries
+	// function movePeople(name:string) {
+	// 	if(moveCrew !== undefined){
+	// 		moveCrew.filter(item =>{
+	// 		    if(item.known_for_department === "Directing"){
+	// 				return item.name
+	// 			}
+	// 		})
+	// 	}
+	// }
 
   return (
     <AppLayout>
-        <section className='px-[100px]'>
+        <section className={`px-[100px] relative`}>
+			{/* <img src={`https://www.themoviedb.org/t/p/w220_and_h330_face/${moveInfo?.backdrop_path}`} className="absolute w-full top-0 left-0 -z-[1]" alt="" /> */}
 			<div className='flex justify-between gap-10 mb-[45px]'>
 				<div>
-					<img src={`https://www.themoviedb.org/t/p/w220_and_h330_face/${moveInfo?.backdrop_path}`}  alt="" className='w-[400px] h-[560px] rounded-xl' />
+					<img src={`https://www.themoviedb.org/t/p/w220_and_h330_face/${moveInfo?.poster_path}`}  alt="" className='w-[500px] h-[560px] rounded-xl' />
 				</div>
 				<div className='w-full flex flex-col justify-start'>
 					<div className='flex items-center gap-2'>
@@ -133,6 +153,10 @@ function index() {
 					<tr>
               		  <td className='text-lg font-medium'>Ganre</td>
               		  <td className='text-[#F2F60F] text-lg'>{moveInfo?.genres.at(0)?.name}</td>
+              		</tr>
+					  <tr>
+              		  <td className='text-lg font-medium'>Director</td>
+              		  <td className='text-[#F2F60F] text-lg'>{}</td>
               		</tr>
                 </table>
 				<table className='w-1/2'>
