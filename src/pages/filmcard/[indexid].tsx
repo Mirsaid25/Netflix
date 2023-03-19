@@ -113,7 +113,7 @@ function index() {
 			{/* <img src={`https://www.themoviedb.org/t/p/w220_and_h330_face/${moveInfo?.backdrop_path}`} className="absolute w-full top-0 left-0 -z-[1]" alt="" /> */}
 			<div className='flex justify-between gap-10 mb-[45px]'>
 				<div>
-					<img src={`https://www.themoviedb.org/t/p/w220_and_h330_face/${moveInfo?.poster_path}`}  alt="" className='w-[500px] h-[560px] rounded-xl' />
+					<img src={`https://www.themoviedb.org/t/p/w220_and_h330_face/${moveInfo?.poster_path}`}  alt="" className='w-[500px] h-[560px] max-xl:w-[300px] max-xl:h-[400px] rounded-xl' />
 				</div>
 				<div className='w-full flex flex-col justify-start'>
 					<div className='flex items-center gap-2'>
@@ -127,43 +127,43 @@ function index() {
 						<BsChevronRight color='#4F5B7C'/>
 						<p className='text-white font-medium'>Film name</p>
 					</div>
-					<h1 className='text-white text-[65px] font-black'>{moveInfo?.original_title}</h1>
+					<h1 className='text-white text-[65px] max-xl:text-[40px] font-black'>{moveInfo?.original_title}</h1>
 					<div className='flex items-center gap-[22px] mb-3'>
 						<div className='flex items-center justify-center flex-col'>
-                            <div className='relative w-[100px] h-[100px] flex flex-col items-center justify-center rounded-full'>
+                            <div className='relative w-[100px] max-xl:w-[80px] h-[100px] max-xl:h-[80px] flex flex-col items-center justify-center rounded-full'>
 					            <Doughnut data={data} className="w-full h-full container"/>
 							    <p className='text-white text-[13px] absolute top-[55%] left-1/2 -translate-x-1/2 -translate-y-1/2'>1</p>
 						    </div>
 						    <p className='text-white text-[15px] font-medium'>Kinoarea</p>
 						</div>
 						<div className='flex items-center justify-center flex-col'>
-                            <div className='relative w-[100px] h-[100px] flex flex-col items-center justify-center rounded-full'>
+                            <div className='relative w-[100px] max-xl:w-[80px] max-xl:h-[80px] h-[100px] flex flex-col items-center justify-center rounded-full'>
 					            <Doughnut data={data} className="w-full h-full container"/>
 							    <p className='text-white text-[13px] absolute top-[55%] left-1/2 -translate-x-1/2 -translate-y-1/2'>1</p>
 						    </div>
 						    <p className='text-white text-[15px] font-medium'>IMDb</p>
 						</div>
 					</div>
-					<p className='text-white text-[20px] font-medium leading-[166.5%] mb-[30px]'>{moveInfo?.overview}</p>
-					<button className='flex items-center gap-3 border-2 px-[35px] py-5 rounded-[10px] w-fit'>
+					<p className='text-white text-[20px] max-xl:text-[15px] font-medium leading-[166.5%] mb-[30px]'>{moveInfo?.overview}</p>
+					<button className='flex items-center gap-3 border-2 px-[35px] max-xl:px-[30px] py-5 rounded-[10px] w-fit'>
                         <Image alt="" width={10} height={10} src={'/icons/play-icon.svg'} className="w-5 h-5" />
-						<p className='text-white text-[18px] font-bold'>Смотреть трейлер</p>
+						<p className='text-white text-[18px] max-xl:text-[15px] font-bold'>Смотреть трейлер</p>
 					</button>
 				</div>
 			</div>
 			<div className='w-full text-white flex  justify-between'>
-			    <table className='w-1/2'>
+			    <table className='w-1/2 text-lg max-xl:text-base'>
               		<tr>
-              		  <td className='text-lg font-medium'>Year</td>
-              		  <td className='text-[#F2F60F] text-lg'>{moveInfo?.release_date.split("-").at(0)}</td>
+              		  <td className='font-medium'>Year</td>
+              		  <td className='text-[#F2F60F]'>{moveInfo?.release_date.split("-").at(0)}</td>
               		</tr>
 					<tr>
-              		  <td className='text-lg font-medium'>Country</td>
-              		  <td className='text-[#F2F60F] text-lg'>{moveInfo?.production_countries[0].name}</td>
+              		  <td className='font-medium'>Country</td>
+              		  <td className='text-[#F2F60F]'>{moveInfo?.production_countries[0].name}</td>
               		</tr>
 					<tr>
-              		  <td className='text-lg font-medium'>Ganre</td>
-              		  <td className='text-[#F2F60F] text-lg'>{moveInfo?.genres.at(0)?.name}</td>
+              		  <td className='font-medium'>Ganre</td>
+              		  <td className='text-[#F2F60F]'>{moveInfo?.genres.at(0)?.name}</td>
               		</tr>
                 </table>
 			</div>
