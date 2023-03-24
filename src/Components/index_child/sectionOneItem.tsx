@@ -25,6 +25,8 @@ const SectionOneItem: React.FC<SectionOneItemProps> = ({arr, arrId}) => {
 	    }
     })
 
+    // `/${arr.id}`
+
   return (
     <div className="move_card">
         <div
@@ -35,7 +37,10 @@ const SectionOneItem: React.FC<SectionOneItemProps> = ({arr, arrId}) => {
 			<img width={100} height={10} src={`https://www.themoviedb.org/t/p/w220_and_h330_face/${arr?.backdrop_path}`} className="w-full" alt="" />
             {hover ? (
           <div className="w-full h-full transition-all ease-in-out bg-[#3658ff8f] absolute top-0 left-0 flex items-center justify-center">
-            <Link href={`/filmcard/${arr.id}`}>
+            <Link href={{
+              pathname: `/${arr.id}`,
+              query: { id: arr.id },
+            }}>
                 <button
                   title="move_card"
                   className="bg-white cursor-pointer px-[40px] py-[20px] max-xl:px-[17px] max-xl:py-[13px] max-sm:px-[14px] max-sm:py-[11px]  rounded-[10px] text-[#3657CB] text-[18px] max-xl:text-[15px] max-sm:text-[13px] max-[330px]:text-[11px] font-bold"
