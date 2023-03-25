@@ -53,6 +53,7 @@ export default function Home() {
 	const [popularPersonsArr, setPopularPersonsArr] = useState<any>([{name:"loading",profile_path:"loading" }])
 	
 	const [trailerKey, setTrailerKey] = useState<string>("yjRHZEUamCc")
+	const [trailerName, setTrailerName] = useState<string>("John Wick: Chapter 4")
 	
 	const size:number|null = useWindowSize().innerWidth
 
@@ -99,11 +100,17 @@ export default function Home() {
 			axios.get(`https://api.themoviedb.org/3/movie/${item?.id}/videos?api_key=${APIkey}&language=en-US`)
 			.then(res => {
 				if(res.data.results.length >= 1 && res.data.id === id ){
-					if (res.data.results.at(1)?.key !== undefined) {
-						setTrailerKey(res.data.results.at(1)?.key)
-					} else{alert("К сожалению трейлера не существует")}
+					res.data.results.filter((item:any) => {
+                        if(item.type === "Trailer"){
+							setTrailerKey(item.key)
+						}
+					})
 				} 
 			})
+            if(item.id === id){
+				setTrailerName(item.title)
+			}
+			
 		}
 	}
 
@@ -124,8 +131,6 @@ export default function Home() {
 		   }
 		}))
 	}
-
-	// profile_path
 
     return (
         <AppLayout>
@@ -175,7 +180,7 @@ export default function Home() {
 				<div className="mb-[50px] max-lg:mb-[30px] max-md:mb-[25px] max-sm:mb-[20px]">
 					<iframe title="trailer" src={`https://www.youtube.com/embed/${trailerKey}`} frameBorder="0" className="w-full h-[800px] rounded-xl mb-5 max-xl:h-[511px] max-lg:h-[450px] max-md:h-[370px] max-sm:h-[250px] max-[425px]:h-[200px]"></iframe>
 					<div className="flex items-center justify-between">
-                        <h1 className="text-white text-[45px] max-lg:text-[35px] max-md:text-[30px] max-sm:text-[25px] font-black">Форсаж 9</h1>
+                        <h1 className="text-white text-[45px] max-lg:text-[35px] max-md:text-[30px] max-sm:text-[25px] font-black">{trailerName}</h1>
 						<div className="flex items-center gap-2">
 							<div className="bg-[#1B2133] w-[58px] h-[58px] max-lg:h-[40px] max-lg:w-[40px] max-md:h-[30px] max-md:w-[30px] rounded-xl flex items-center justify-center cursor-pointer">
 								<AiFillLike color="white" size={26} className="max-lg:w-[17px] max-lg:h-[17px] max-md:w-[13px] max-md:h-[13px] "/>
