@@ -1,4 +1,4 @@
-import SectionOneItem from "@/Components/index_child/sectionOneItem";
+// import SectionOneItem from "@/Components/index_child/sectionOneItem";
 import AppLayout from "@/Layouts/AppLayout";
 import { Inter } from "@next/font/google";
 import {useEffect, useState } from "react";
@@ -18,6 +18,12 @@ import useWindowSize from "@rooks/use-window-size";
 import { createTheme, Pagination } from '@mui/material'
 import SectionFiveItem from "@/Components/index_child/sectionFiveItem";
 import axios from "axios";
+import dynamic from 'next/dynamic'
+import MyLoader from "@/Components/MyLoader";
+
+const SectionOneItem = dynamic(() => import('@/Components/index_child/sectionOneItem'), {
+  loading: () => <p className="text-[white] font-black text-[50px]">{<MyLoader/>}</p>,
+})
 
 export const APIkey = "d8c00e564262e291fb38f263b4c7128e"
 
@@ -273,8 +279,6 @@ export default function Home() {
                         <p className="text-[#F2F60F] text-[15px] max-lg:text-[12px] font-medium">1-е место</p>
 						<div className="flex flex-col justify-start">
                             <h1 className="text-white text-[27px] max-lg:text-[20px] max-sm:text-[17px] font-bold max-[425px]:font-medium">{popularPersonsArr.length >0 ? popularPersonsArr[0].name : "loading..."}</h1>
-							{/* <p className="text-[#5A5B5CFF] text-[27px] max-lg:text-[15px] max-[425px]:text-[11px] font-bold max-[425px]:font-semibold">{popularPersonsArrEn.length >0 ? popularPersonsArrEn[0].name : "loading..."}</p> */}
-							{/* <span className="text-[#F2F60F] text-[15px] max-lg:text-[12px] max-[425px]:text-[10px] font-medium">20 лет</span> */}
 						</div>
 					</div>
 					<div className={`h-[444px] overflow-hidden relative max-xl:h-[300px] max-lg:h-[300px] max-md:h-[321px] max-sm:h-[250px] max-[425px]:h-[180px] py-3 px-4 rounded-xl w-full bg-no-repeat bg-cover bg-center flex flex-col items-start justify-between`}>
@@ -286,8 +290,6 @@ export default function Home() {
                         <p className="text-[#F2F60F] text-[15px] max-lg:text-[12px] font-medium">2-е место</p>
 						<div className="flex flex-col justify-start">
                             <h1 className="text-white text-[27px] max-lg:text-[20px] max-sm:text-[17px] max-[425px]:text-[15px] font-bold max-[425px]:font-medium">{popularPersonsArr.length >1 ? popularPersonsArr[1].name : "loading..."}</h1>
-							{/* <p className="text-[#5A5B5CFF] text-[27px] max-lg:text-[15px] max-[425px]:text-[11px] font-bold max-[425px]:font-semibold">Jason Statham</p>
-							<span className="text-[#F2F60F] text-[15px] max-lg:text-[12px] max-[425px]:text-[10px] font-medium">52 года</span> */}
 						</div>
 					</div>
 					<div className="h-[444px] max-xl:h-[300px] max-lg:h-auto bg-[#1B2133] rounded-xl p-[30px] max-xl:p-4 max-lg:col-start-1 max-lg:col-end-3 overflow-hidden">
