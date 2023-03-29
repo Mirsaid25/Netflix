@@ -24,9 +24,7 @@ const SectionOneItem: React.FC<SectionOneItemProps> = ({arr, arrId}) => {
 	    	}
 	    }
     })
-
-    // `/${arr.id}`
-
+    
   return (
     <div className="move_card">
         <div
@@ -34,9 +32,9 @@ const SectionOneItem: React.FC<SectionOneItemProps> = ({arr, arrId}) => {
           onMouseEnter={() => setHover(true)}
           className="relative rounded-xl mb-[9px] overflow-hidden transition-all ease-in-out"
         >
-			<img width={100} height={10} src={`https://www.themoviedb.org/t/p/w220_and_h330_face/${arr?.backdrop_path}`} className="w-full" alt="" />
+			<img width={100} height={10} src={arr?.backdrop_path !== null ?  `https://www.themoviedb.org/t/p/w220_and_h330_face/${arr?.backdrop_path}` : "/image/[indexId]/posterError.svg"} className="w-full" alt="" />
             {hover ? (
-          <div className="w-full h-full transition-all ease-in-out bg-[#3658ff8f] absolute top-0 left-0 flex items-center justify-center">
+                <div className="w-full h-full transition-all ease-in-out bg-[#3658ff8f] absolute top-0 left-0 flex items-center justify-center">
             <Link href={{
               pathname: `/${arr.id}`,
               query: { id: arr.id },
@@ -48,7 +46,7 @@ const SectionOneItem: React.FC<SectionOneItemProps> = ({arr, arrId}) => {
                   Карточка фильма
                 </button>
             </Link>
-          </div>
+                </div>
             ) : null} 
             <div className="bg-[#89CB36] px-[13px] py-[5px] max-lg:px-[7px] max-lg:py-[4px] max-sm:px-[5px] rounded-md absolute top-3 right-3 max-md:top-[10px] max-md:right-[10px] max-sm:top-[8px] max-sm:right-[8px]">
             <p className="text-white text-[18px] max-lg:text-[12px] font-bold text-center">{Math.round(arr?.popularity)}</p>

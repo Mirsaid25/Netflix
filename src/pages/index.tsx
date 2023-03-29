@@ -74,8 +74,7 @@ export default function Home() {
 		    .then(res => setPopularPersonsArr(res.data.results))
 
 	}, [])
-	
-	
+		
 	useEffect(() => {
 		axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${APIkey}&language=en-US&page=${plaginationNum}`)
 		.then(res => setArrPopular(res.data.results))

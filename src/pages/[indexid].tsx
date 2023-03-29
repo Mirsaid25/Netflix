@@ -13,6 +13,7 @@ import Actiors from "@/Components/[indexId]_child/Actior";
 import { Swiper, SwiperSlide } from 'swiper/react'; 
 import { Scrollbar } from "swiper";
 import useWindowSize from "@rooks/use-window-size";
+import SectionOneItem from "@/Components/index_child/sectionOneItem";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 type moveInfoT = {
@@ -50,23 +51,35 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 		`https://api.themoviedb.org/3/movie/${router}/videos?api_key=${APIkey}&language=en-US`,
 	  )
 
+	const res4 = await fetch(
+		`https://api.themoviedb.org/3/movie/${router}/similar?api_key=${APIkey}&language=en-US&page=1`,
+	)
+
+	const res5 = await fetch(
+		`https://api.themoviedb.org/3/genre/movie/list?api_key=${APIkey}&language=en-US`,
+	)
+
 	const data = await res.json();
 	const  crew = await res2.json();
 	const  tralerKeys = await res3.json();
+	const  similar = await res4.json();
+	const  ganreArr = await res5.json();
 
 
-
+	// 
 	return {
 	  props: {
 		 data: data,
 		 crew: crew,
-		 tralerKeys: tralerKeys
+		 tralerKeys: tralerKeys,
+		 similar: similar?.results,
+		 ganreArr: ganreArr?.genres
 	   },
 	};
   };
 
-const indexid = ({data , crew, tralerKeys}: any) => {	
-	// console.log(crew);
+const indexid = ({data , crew, tralerKeys, similar, ganreArr}: any) => {	
+	// console.log(ganreArr);
 
 	const [like, setLike] = useState(false)
 
@@ -75,6 +88,7 @@ const indexid = ({data , crew, tralerKeys}: any) => {
 		    return item	
 		}
 	})
+
 
 	// chart reating
 	const data1 = {
@@ -288,37 +302,23 @@ const indexid = ({data , crew, tralerKeys}: any) => {
 		    <div className="flex justify-center mb-[40px] max-sm:mb-2">
 				<h1 className="text-white font-black text-[65px] max-[1580px]:text-[50px] max-xl:text-[40px] max-sm:text-[32px]">Похожие фильмы</h1>
 			</div>
-			{/* <Swiper
-				      modules={[Scrollbar]}
-                      spaceBetween={20}
-                      slidesPerView={size !== null && size < 426 ? 3 : 5}
-                      scrollbar={{ draggable:true }}
-                    >
-						{arr.map((item: any)=> (
-							<SwiperSlide key={item.id} 
-							onClick={(e)=>{
-                                trailSlider(item?.id)
-							}}
-							>
-                            <div className="w-full h-[350px] max-xl:h-[200px] max-lg:h-[155px] max-md:h-[150px] max-[640px]:h-[120px] max-sm:h-[130px] rounded-xl overflow-hidden mb-2 relative cursor-pointer"
-                            >
-                              <img
-                                src={`https://www.themoviedb.org/t/p/w220_and_h330_face/${item?.backdrop_path}`}
-                                alt=""
-                                className="w-full h-full"
-                              />
-                              <img
-                                src={"/image/main/play_icon.svg"}
-                                alt=""
-                                className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-[35px] h-[35px] max-lg:w-[20px] max-lg:h-[20px] max-md:w-[16px] max-md:h-[16px] max-[226px]:h-[18px] max-[226px]:w-[18px]"
-                              />
-                            </div>
-                            <p className="text-[20px] max-lg:text-[15px] max-md:text-[13px] font-black text-white">{item?.title}</p>
-                        </SwiperSlide> */}
-						{/* ))}
-						
-                      ...
-                </Swiper> */}
+			<Swiper
+				  modules={[Scrollbar]}
+                  spaceBetween={20}
+                  slidesPerView={size !== null && size < 426 ? 3 : 5}
+                  scrollbar={{ draggable:true }}
+                >
+					{similar.map((item: any)=> (
+						<SwiperSlide key={item.id} 
+						// onClick={(e)=>{
+                        //     // trailSlider(item?.id)
+						// }}
+						>
+							<SectionOneItem key={item.id} arr={item} arrId={ganreArr}/> 
+                        </SwiperSlide>
+					))}
+                  ...
+            </Swiper>
 		</section>
     </AppLayout>
   );
