@@ -10,6 +10,9 @@ import {FaHeart } from "react-icons/fa";
 import { GetServerSideProps } from "next";
 import { APIkey } from ".";
 import Actiors from "@/Components/[indexId]_child/Actior";
+import { Swiper, SwiperSlide } from 'swiper/react'; 
+import { Scrollbar } from "swiper";
+import useWindowSize from "@rooks/use-window-size";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 type moveInfoT = {
@@ -105,6 +108,8 @@ const indexid = ({data , crew, tralerKeys}: any) => {
 	  };
 	//  *
 
+	const size:number|null = useWindowSize().innerWidth
+
 	function likeClick(){
 		setLike(!like)
 	}
@@ -155,7 +160,7 @@ const indexid = ({data , crew, tralerKeys}: any) => {
                             data={data1}
                             options={options}
                          ></Doughnut>
-						<p className="text-white font-bold absolute top-[55%] left-1/2 -translate-x-1/2 -translate-y-1/2">{data?.vote_average.toFixed(1)}</p>
+						<p className="text-white font-bold absolute top-[55%] left-1/2 -translate-x-1/2 -translate-y-1/2">{Math.floor(data?.vote_average *10) }</p>
 						<span className="text-white font-bold">Netflix</span>
 					</div>
 					<p className="text-white font-medium text-[20px] mb-[30px]">
@@ -200,7 +205,7 @@ const indexid = ({data , crew, tralerKeys}: any) => {
                                 Страна:
                             </th>
                             <td className="py-4 text-[18px] font-medium text-[#F2F60F] ">
-                                {data?.production_countries[0]?.name}
+                                {data?.production_countries !== undefined ? data?.production_countries[0]?.name : "not found"}
                             </td>
                         </tr>
 						<tr>
@@ -220,7 +225,7 @@ const indexid = ({data , crew, tralerKeys}: any) => {
 							    Режиссер:
                             </th>
                             <td className="py-4 text-[18px] font-medium text-[#F2F60F] ">
-                                {directing1.length > 0  && directing1.at(-1).name !== undefined ? directing1.at(-1).name : directing2.at(-1).name }
+                                {directing1 !== null  && directing1?.at(0)?.name !== undefined ? directing1?.at(-1)?.name : directing2?.at(-1)?.name }
                             </td>
                         </tr>
 						<tr>
@@ -228,7 +233,7 @@ const indexid = ({data , crew, tralerKeys}: any) => {
 							    Жанр:
                             </th>
                             <td className="py-4 text-[18px] font-medium text-[#F2F60F] ">
-                                {data?.genres.at(1).name}
+                                {data?.genres?.at(1)?.name}
                             </td>
                         </tr>
 						<tr>
@@ -252,7 +257,7 @@ const indexid = ({data , crew, tralerKeys}: any) => {
 				</div>
 			</div>
             <div className="grid grid-cols-5 gap-12">
-				{actiorArr.slice(0 , 10).map((item:any)=> <Actiors data={item}/>)}
+				{actiorArr?.slice(0 , 10)?.map((item:any)=> <Actiors data={item}/>)}
                 
 			</div>
 		</section>
@@ -280,13 +285,40 @@ const indexid = ({data , crew, tralerKeys}: any) => {
 			</div>
 		</section>
 		<section className="section4 mb-[75px]">
-		    <div className="flex items-center justify-between mb-[40px] max-sm:flex-col max-sm:gap-2 max-sm:mb-2">
-				<h1 className="text-white font-black text-[65px] max-[1580px]:text-[50px] max-xl:text-[40px] max-sm:text-[32px]">Трейлер фильма</h1>
-				<div className="flex items-center gap-5 cursor-pointer">
-					<p className="text-white text-[22px] max-xl:text-[18px] font-bold">Все трейлеры</p>
-					<BsArrowRight color="white" size={26}/>
-				</div>
+		    <div className="flex justify-center mb-[40px] max-sm:mb-2">
+				<h1 className="text-white font-black text-[65px] max-[1580px]:text-[50px] max-xl:text-[40px] max-sm:text-[32px]">Похожие фильмы</h1>
 			</div>
+			{/* <Swiper
+				      modules={[Scrollbar]}
+                      spaceBetween={20}
+                      slidesPerView={size !== null && size < 426 ? 3 : 5}
+                      scrollbar={{ draggable:true }}
+                    >
+						{arr.map((item: any)=> (
+							<SwiperSlide key={item.id} 
+							onClick={(e)=>{
+                                trailSlider(item?.id)
+							}}
+							>
+                            <div className="w-full h-[350px] max-xl:h-[200px] max-lg:h-[155px] max-md:h-[150px] max-[640px]:h-[120px] max-sm:h-[130px] rounded-xl overflow-hidden mb-2 relative cursor-pointer"
+                            >
+                              <img
+                                src={`https://www.themoviedb.org/t/p/w220_and_h330_face/${item?.backdrop_path}`}
+                                alt=""
+                                className="w-full h-full"
+                              />
+                              <img
+                                src={"/image/main/play_icon.svg"}
+                                alt=""
+                                className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-[35px] h-[35px] max-lg:w-[20px] max-lg:h-[20px] max-md:w-[16px] max-md:h-[16px] max-[226px]:h-[18px] max-[226px]:w-[18px]"
+                              />
+                            </div>
+                            <p className="text-[20px] max-lg:text-[15px] max-md:text-[13px] font-black text-white">{item?.title}</p>
+                        </SwiperSlide> */}
+						{/* ))}
+						
+                      ...
+                </Swiper> */}
 		</section>
     </AppLayout>
   );
