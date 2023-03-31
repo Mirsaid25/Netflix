@@ -36,7 +36,7 @@ const SectionOneItem: React.FC<SectionOneItemProps> = ({arr, arrId}) => {
             {hover ? (
                 <div className="w-full h-full transition-all ease-in-out bg-[#3658ff8f] absolute top-0 left-0 flex items-center justify-center">
             <Link href={{
-              pathname: `/${arr.id}`,
+              pathname: `/movie/&`,
               query: { id: arr.id },
             }}>
                 <button
