@@ -42,7 +42,7 @@ export const Foother = () => {
 				<Link href={"/"}><SlSocialVkontakte size={30} className="w-[30px] max-lg:w-[27px] max-md:w-[25px] max-sm:w-[20px]" color="#3C4767FF"/></Link>
 			</div>
 			<div className="flex max-sm:flex-col items-center gap-10 max-sm:gap-5 justify-center mb-[41px]">
-			    <Link href="#"><p className="text-white text-[17px] max-lg:text-[13px] font-bold leading-5">Афиша</p></Link>
+			    <Link href="/movie"><p className="text-white text-[17px] max-lg:text-[13px] font-bold leading-5">Афиша</p></Link>
                 <Link href="#"><p className="text-white text-[17px] max-lg:text-[13px] font-bold leading-5">Новости</p></Link>
                 <Link href="#"><p className="text-white text-[17px] max-lg:text-[13px] font-bold leading-5">Персоны</p></Link>
                 <Link href="#"><p className="text-white text-[17px] max-lg:text-[13px] font-bold leading-5">Рейтинги</p></Link>

@@ -17,7 +17,7 @@ const HeaderModal =({setModalHandle}:HeaderModalProps)=> {
                 width={100} 
                 height={25}
             />
-			<Link href="/public"><p className="text-white text-[13px] font-bold leading-5">Афиша</p></Link>
+			<Link href="/movie"><p className="text-white text-[13px] font-bold leading-5">Афиша</p></Link>
             <Link href="#"><p className="text-white text-[13px] font-bold leading-5">Медиа</p></Link>
             <Link href="#"><p className="text-white text-[13px] font-bold leading-5">Фильмы</p></Link>
             <Link href="#"><p className="text-white text-[13px] font-bold leading-5">Актёры </p></Link>

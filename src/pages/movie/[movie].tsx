@@ -125,7 +125,7 @@ const indexid = ({data , crew, tralerKeys, similar, ganreArr}: any) => {
 
 	const size:number|null = useWindowSize().innerWidth
 
-	console.log(size);
+	console.log(similar.length > 0);
 	
 
 	function likeClick(){
@@ -158,7 +158,7 @@ const indexid = ({data , crew, tralerKeys, similar, ganreArr}: any) => {
         <section className="section1 flex flex-col items-start w-[80%] m-auto justify-center mb-[75px] max-xl:mb-[50px] max-lg:mb-[45px]">
 			<div className="flex justify-between gap-[50px] mb-5">
                 <img src={data?.poster_path !== undefined ? `https://www.themoviedb.org/t/p/w220_and_h330_face/${data?.poster_path}` : "/image/[indexId]/posterError.svg"} alt="" 
-				    className="w-[400px] h-[500px] max-xl:w-[300px] max-xl:h-[400px] max-sm:h-[310px] max-sm:w-[230px] rounded-xl " />
+				    className="w-[400px] h-[550px] max-lg:w-[300px] max-lg:h-[400px] max rounded-xl " />
 				<div className="flex flex-col items-start w-full">
                     <div className="flex items-center gap-2 mb-1">
 						<Link href={"/"}>
@@ -214,7 +214,7 @@ const indexid = ({data , crew, tralerKeys, similar, ganreArr}: any) => {
                                 Год:
                             </th>
                             <td className="py-4 text-[18px] font-medium text-[#F2F60F] ">
-                                {data?.release_date}
+                                {data?.release_date !== undefined ? data?.release_date : "null" }
                             </td>
                         </tr>
 						<tr>
@@ -222,7 +222,7 @@ const indexid = ({data , crew, tralerKeys, similar, ganreArr}: any) => {
                                 Страна:
                             </th>
                             <td className="py-4 text-[18px] font-medium text-[#F2F60F] ">
-                                {data?.production_countries !== undefined ? data?.production_countries[0]?.name : "not found"}
+                                {data?.production_countries[0]?.name  !== undefined ? data?.production_countries[0]?.name : "null"}
                             </td>
                         </tr>
 						<tr>
@@ -230,7 +230,7 @@ const indexid = ({data , crew, tralerKeys, similar, ganreArr}: any) => {
                                 Слоган:
                             </th>
                             <td className="py-4 text-[18px] font-medium text-[#F2F60F] ">
-                                {data?.tagline}
+							    {data?.tagline !== undefined ? data?.tagline : "null" }
                             </td>
                         </tr>
                     </tbody>
@@ -250,7 +250,7 @@ const indexid = ({data , crew, tralerKeys, similar, ganreArr}: any) => {
 							    Жанр:
                             </th>
                             <td className="py-4 text-[18px] font-medium text-[#F2F60F] ">
-                                {data?.genres?.at(1)?.name}
+							    {data?.genres?.at(1)?.name !== undefined ? data?.genres?.at(1)?.name : "null" }
                             </td>
                         </tr>
 						<tr>
@@ -258,7 +258,7 @@ const indexid = ({data , crew, tralerKeys, similar, ganreArr}: any) => {
 							    Время:
                             </th>
                             <td className="py-4 text-[18px] font-medium text-[#F2F60F] ">
-                                {data.runtime} мин.
+							    {data?.runtime !== undefined ? data?.runtime : "null" }мин.
                             </td>
                         </tr>
                     </tbody>
@@ -273,7 +273,7 @@ const indexid = ({data , crew, tralerKeys, similar, ganreArr}: any) => {
 					<BsArrowRight color="white" size={26}/>
 				</div>
 			</div>
-            <div className="grid grid-cols-5 max-xl:grid-cols-4 max-lg:grid-cols-3 gap-12 max-xl:gap-[40px]">
+            <div className="grid grid-cols-5 max-xl:grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 gap-12 max-xl:gap-[40px]">
 				{actiorArr?.slice(0 , 10)?.map((item:any)=> <Actiors data={item}/>)}
 			</div>
 		</section>
@@ -300,7 +300,8 @@ const indexid = ({data , crew, tralerKeys, similar, ganreArr}: any) => {
 				</div>
 			</div>
 		</section>
-		<section className="section4 mb-[75px] max-xl:mb-[50px] max-lg:mb-[45px]">
+		{similar.length > 0 ? 
+			<section className="section4 mb-[75px] max-xl:mb-[50px] max-lg:mb-[45px]">
 		    <div className="flex justify-center mb-[40px] max-sm:mb-2">
 				<h1 className="text-white font-black text-[65px] max-[1580px]:text-[50px] max-xl:text-[40px] max-sm:text-[32px]">Похожие фильмы:</h1>
 			</div>
@@ -322,6 +323,9 @@ const indexid = ({data , crew, tralerKeys, similar, ganreArr}: any) => {
                   ...
             </Swiper>
 		</section>
+		: 
+			null
+		}
     </AppLayout>
   );
 };
