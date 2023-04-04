@@ -80,7 +80,6 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   };
 
 const indexid = ({data , crew, tralerKeys, similar, ganreArr}: any) => {	
-	// console.log(ganreArr);
 
 	const [like, setLike] = useState(false)
 
