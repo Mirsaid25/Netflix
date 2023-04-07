@@ -20,6 +20,7 @@ import SectionFiveItem from "@/Components/index_child/sectionFiveItem";
 import axios from "axios";
 import dynamic from 'next/dynamic'
 import MyLoader from "@/Components/MyLoader";
+import Link from "next/link";
 
 const SectionOneItem = dynamic(() => import('@/Components/index_child/sectionOneItem'), {
   loading: () => <p className="text-[white] font-black text-[50px]">{<MyLoader/>}</p>,
@@ -172,7 +173,9 @@ export default function Home() {
 					{arr !== undefined && size !== null && size < 830 && size >= 640 ? arrSectionOne.slice(0,9).map((arr:{popularity: number, id:number,backdrop_path: string,original_title: string,genre_ids:[]})=> <SectionOneItem key={arr.id} arrId={arrGanre} arr={arr}/>) : null}
 					{arr !== undefined && size !== null && size < 640 ? arrSectionOne.slice(0,6).map((arr:{popularity: number,id:number,backdrop_path: string,original_title: string,genre_ids:[]})=> <SectionOneItem key={arr.id} arrId={arrGanre} arr={arr}/>) : null}
 				</div>
-				<button className="border-2 border-white px-11 max-lg:px-[34px] max-md:px-[32px] py-5 max-lg:py-[16px] max-md:py-[11px] rounded-xl text-white text-lg max-lg:text-base font-bold m-auto" title="Все новинки">Все новинки</button>
+				<Link href="/movie" className="flex justify-center">
+				    <button className="border-2 border-white px-11 max-lg:px-[34px] max-md:px-[32px] py-5 max-lg:py-[16px] max-md:py-[11px] rounded-xl text-white text-lg max-lg:text-base font-bold m-auto" title="Все новинки">Все новинки</button>
+				</Link>
 			</section>
 			<section className="section2 mb-[75px]">
 				<div className="flex items-center justify-between mb-[40px] max-sm:flex-col max-sm:gap-2 max-sm:mb-2">

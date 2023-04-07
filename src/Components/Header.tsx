@@ -54,9 +54,9 @@ const Header=({setModalHandle}:HeadeerProps)=> {
                     </div>
                 </div>
                 <div className="flex items-center gap-10 max-xl:gap-8 max-lg:gap-6 max-md:gap-4 max-sm:gap-2 max-[515px]:hidden">
-                    <Link href="/movie"><p className="text-white text-[17px] max-lg:text-[13px] max-md:text-[12px] font-bold  max-md:font-semibold leading-5">Афиша</p></Link>
+                    <Link href="#"><p className="text-white text-[17px] max-lg:text-[13px] max-md:text-[12px] font-bold  max-md:font-semibold leading-5">Афиша</p></Link>
                     <Link href="#"><p className="text-white text-[17px] max-lg:text-[13px] max-md:text-[12px] font-bold  max-md:font-semibold leading-5">Медиа</p></Link>
-                    <Link href="#"><p className="text-white text-[17px] max-lg:text-[13px] max-md:text-[12px] font-bold  max-md:font-semibold leading-5">Фильмы</p></Link>
+                    <Link href="/movie"><p className="text-white text-[17px] max-lg:text-[13px] max-md:text-[12px] font-bold  max-md:font-semibold leading-5">Фильмы</p></Link>
                     <Link href="#"><p className="text-white text-[17px] max-lg:text-[13px] max-md:text-[12px] font-bold  max-md:font-semibold leading-5">Актёры </p></Link>
                     <Link href="#"><p className="text-white text-[17px] max-lg:text-[13px] max-md:text-[12px] font-bold  max-md:font-semibold leading-5">Новости</p></Link>
                     <Link href="#"><p className="text-white text-[17px] max-lg:text-[13px] max-md:text-[12px] font-bold  max-md:font-semibold leading-5">Подборки</p></Link>

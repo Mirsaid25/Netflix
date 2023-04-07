@@ -14,7 +14,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import {Scrollbar } from "swiper";
 import useWindowSize from "@rooks/use-window-size";
 import SectionOneItem from "@/Components/index_child/sectionOneItem";
-import { createTheme, Pagination } from '@mui/material'
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 type moveInfoT = {
