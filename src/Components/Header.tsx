@@ -57,7 +57,7 @@ const Header=({setModalHandle}:HeadeerProps)=> {
                     <Link href="#"><p className="text-white text-[17px] max-lg:text-[13px] max-md:text-[12px] font-bold  max-md:font-semibold leading-5">Афиша</p></Link>
                     <Link href="#"><p className="text-white text-[17px] max-lg:text-[13px] max-md:text-[12px] font-bold  max-md:font-semibold leading-5">Медиа</p></Link>
                     <Link href="/movie"><p className="text-white text-[17px] max-lg:text-[13px] max-md:text-[12px] font-bold  max-md:font-semibold leading-5">Фильмы</p></Link>
-                    <Link href="#"><p className="text-white text-[17px] max-lg:text-[13px] max-md:text-[12px] font-bold  max-md:font-semibold leading-5">Актёры </p></Link>
+                    <Link href="/actor"><p className="text-white text-[17px] max-lg:text-[13px] max-md:text-[12px] font-bold  max-md:font-semibold leading-5">Актёры </p></Link>
                     <Link href="#"><p className="text-white text-[17px] max-lg:text-[13px] max-md:text-[12px] font-bold  max-md:font-semibold leading-5">Новости</p></Link>
                     <Link href="#"><p className="text-white text-[17px] max-lg:text-[13px] max-md:text-[12px] font-bold  max-md:font-semibold leading-5">Подборки</p></Link>
                     <Link href="#"><p className="text-white text-[17px] max-lg:text-[13px] max-md:text-[12px] font-bold  max-md:font-semibold leading-5">Категории</p></Link>

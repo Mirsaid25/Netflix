@@ -320,7 +320,7 @@ const indexid = ({data , crew, tralerKeys, similar, ganreArr}: any) => {
 					))}
                   ...
             </Swiper>
-		</section>
+		    </section>
 		: 
 			null
 		}
