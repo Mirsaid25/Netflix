@@ -41,22 +41,22 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	const router = query.id;
 
 	const res = await fetch(
-	  `https://api.themoviedb.org/3/movie/${router}?api_key=${APIkey}&page=1&`
+	  `https://api.themoviedb.org/3/tv/${router}?api_key=${APIkey}&page=1&`
 	);
 	const res2 = await fetch(
-	  `https://api.themoviedb.org/3/movie/${router}/credits?api_key=${APIkey}&language=ru-RU`,
+	  `https://api.themoviedb.org/3/tv/${router}/credits?api_key=${APIkey}&language=ru-RU`,
 	)
 
 	const res3 = await fetch(
-		`https://api.themoviedb.org/3/movie/${router}/videos?api_key=${APIkey}&language=en-US`,
+		`https://api.themoviedb.org/3/tv/${router}/videos?api_key=${APIkey}&language=en-US`,
 	  )
 
 	const res4 = await fetch(
-		`https://api.themoviedb.org/3/movie/${router}/similar?api_key=${APIkey}&language=en-US&page=1`,
+		`https://api.themoviedb.org/3/tv/${router}/similar?api_key=${APIkey}&language=en-US&page=1`,
 	)
 
 	const res5 = await fetch(
-		`https://api.themoviedb.org/3/genre/movie/list?api_key=${APIkey}&language=en-US`,
+		`https://api.themoviedb.org/3/genre/tv/list?api_key=${APIkey}&language=en-US`,
 	)
 
 	const data = await res.json();
@@ -122,9 +122,6 @@ const indexid = ({data , crew, tralerKeys, similar, ganreArr}: any) => {
 	//  *
 
 	const size:number|null = useWindowSize().innerWidth
-
-	console.log(similar.length > 0);
-	
 
 	function likeClick(){
 		setLike(!like)
@@ -315,7 +312,7 @@ const indexid = ({data , crew, tralerKeys, similar, ganreArr}: any) => {
                         //     // trailSlider(item?.id)
 						// }}
 						>
-							<SectionOneItem type="movie" key={item.id} arr={item} arrId={ganreArr}/> 
+							<SectionOneItem key={item.id} arr={item} type="tv" arrId={ganreArr}/> 
                         </SwiperSlide>
 					))}
                   ...

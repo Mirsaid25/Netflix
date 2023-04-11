@@ -11,11 +11,12 @@ type SectionOneItemProps= {
 	genre_ids:[],
   id:number
   },
-  arrId:[]
+  arrId:[],
+  type:string
 }
 
-const SectionOneItem: React.FC<SectionOneItemProps> = ({arr, arrId}) => {
-  const [hover, setHover] = useState<boolean>(false);
+const SectionOneItem: React.FC<SectionOneItemProps> = ({arr, arrId, type}) => {
+  const [hover, setHover] = useState<boolean>(false); 
 
     const ganre =  arrId.filter((item: any) => {
 	    for(let items of arr.genre_ids){
@@ -36,7 +37,7 @@ const SectionOneItem: React.FC<SectionOneItemProps> = ({arr, arrId}) => {
             {hover ? (
                 <div className="w-full h-full transition-all ease-in-out bg-[#3658ff8f] absolute top-0 left-0 flex items-center justify-center">
             <Link href={{
-              pathname: `/movie/&`,
+              pathname: `/${type}/&`,
               query: { id: arr.id },
             }}>
                 <button

@@ -17,7 +17,7 @@ const index =()=> {
 
 
     useEffect(() => {
-        axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=${APIkey}&language=en-US&page=1`)
+        axios.get(`https://api.themoviedb.org/3/tv/popular?api_key=${APIkey}&language=en-US&page=1`)
 	      .then(res1 => {
 			if(res1.status === 200 || res1.status === 201){
 			    setArr(res1.data.results)
@@ -28,7 +28,7 @@ const index =()=> {
 		// axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=${APIkey}&language=en-US&page=2`)
 	    //   .then(res => res.status === 200 || res.status === 201 ? setArr(...arr , ...res.data.results): null)
 
-	    axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${APIkey}&language=en-US`)
+	    axios.get(`https://api.themoviedb.org/3/genre/tv/list?api_key=${APIkey}&language=en-US`)
 		    .then(res=>res.status === 200 || res.status === 201 ? setGanreArr(res.data.genres) : null)
 	}, [])
 	
@@ -72,13 +72,13 @@ const index =()=> {
         <section className='section1 mb-5'>
             <div className='flex items-center justify-between relative'>
 				<div>
-				    <h1 className="text-white font-black mb-2 text-[65px] max-[1580px]:text-[50px] max-xl:text-[40px] max-sm:text-[32px] max-[500px]:text-[28px]">Все фильмы</h1>
+				    <h1 className="text-white font-black mb-2 text-[65px] max-[1580px]:text-[50px] max-xl:text-[40px] max-sm:text-[32px] max-[500px]:text-[28px]">Все сериалы</h1>
 					<div className="flex items-center gap-2 mb-1">
 						<Link href={"/"}>
                             <span className="text-[#4F5B7C] font-semibold max-lg:font-medium">Главная </span>
 						</Link>
 						<BsChevronRight color="#4F5B7C"/>
-						<p className="text-white font-semibold max-lg:font-medium">Фильмы</p>
+						<p className="text-white font-semibold max-lg:font-medium">Сериалы</p>
 					</div>
 				</div>
 				<div className={filterHandle ? 'w-auto bg-[#000025] rounded-xl p-5 max-xl:p-4 max-lg:p-3 max-sm:p-2 overflow-hidden transition-all ease-in absolute right-0 top-0 z-10' : 'w-auto h-[60px] max-xl:h-[50px] max-lg:h-[45px] max-md:h-[40px] max-sm:h-[33px] bg-[#000025] rounded-xl p-5 max-xl:p-4 max-lg:p-3 max-sm:p-2 overflow-hidden'}>
@@ -103,7 +103,7 @@ const index =()=> {
 		</section>
 		<section className='section2 w-[88%] max-xl:w-[80%] max-lg:w-[80%] max-md:w-[77%] max-sm:w-[70%] max-[385px]:w-[65%] max-[326px]:w-[60%]'>
 			<div className='grid grid-cols-5 max-xl:grid-cols-4 max-lg:grid-cols-3 max-sm:grid-cols-2 max-[385px]:grid-cols-1 gap-5 max-md:gap-3'>
-                {filteredArr.map((item:any)=> <SectionOneItem type="movie" arr={item} arrId={ganreArr}/>)}
+                {filteredArr.map((item:any)=> <SectionOneItem arr={item} arrId={ganreArr} type="tv"/>)}
 			</div>
 		</section>
     </AppLayout>

@@ -180,9 +180,9 @@ export default function Home() {
 			    		}
 			    	</div>
 			    	<div className="w-full grid grid-cols-4 max-[830px]:grid-cols-3 max-sm:grid-cols-2 gap-5 max-md:gap-3 max-sm:gap-2 mb-[50px] max-lg:mb-[40px] max-md:mb-[30px] max-sm:mb-5">
-			    	    {arr !== undefined && size !== null && size >= 830 ? arrSectionOne.slice(0,8).map((arr:{popularity: number, id:number,backdrop_path: string,original_title: string,genre_ids:[]}) => <SectionOneItem key={arr.id} arrId={arrGanre} arr={arr}/>) : null}
-			    		{arr !== undefined && size !== null && size < 830 && size >= 640 ? arrSectionOne.slice(0,9).map((arr:{popularity: number, id:number,backdrop_path: string,original_title: string,genre_ids:[]})=> <SectionOneItem key={arr.id} arrId={arrGanre} arr={arr}/>) : null}
-			    		{arr !== undefined && size !== null && size < 640 ? arrSectionOne.slice(0,6).map((arr:{popularity: number,id:number,backdrop_path: string,original_title: string,genre_ids:[]})=> <SectionOneItem key={arr.id} arrId={arrGanre} arr={arr}/>) : null}
+			    	    {arr !== undefined && size !== null && size >= 830 ? arrSectionOne.slice(0,8).map((arr:{popularity: number, id:number,backdrop_path: string,original_title: string,genre_ids:[]}) => <SectionOneItem type="movie" key={arr.id} arrId={arrGanre} arr={arr}/>) : null}
+			    		{arr !== undefined && size !== null && size < 830 && size >= 640 ? arrSectionOne.slice(0,9).map((arr:{popularity: number, id:number,backdrop_path: string,original_title: string,genre_ids:[]})=> <SectionOneItem type="movie" key={arr.id} arrId={arrGanre} arr={arr}/>) : null}
+			    		{arr !== undefined && size !== null && size < 640 ? arrSectionOne.slice(0,6).map((arr:{popularity: number,id:number,backdrop_path: string,original_title: string,genre_ids:[]})=> <SectionOneItem type="movie" key={arr.id} arrId={arrGanre} arr={arr}/>) : null}
 			    	</div>
 			    	<Link href="/movie" className="flex justify-center">
 			    	    <button className="border-2 border-white px-11 max-lg:px-[34px] max-md:px-[32px] py-5 max-lg:py-[16px] max-md:py-[11px] rounded-xl text-white text-lg max-lg:text-base font-bold m-auto" title="Все новинки">Все новинки</button>
@@ -271,9 +271,9 @@ export default function Home() {
 			        		}
 			    	</div>
 			    	<div className="grid grid-cols-4 max-md:grid-cols-3 max-sm:grid-cols-2 mb-5 gap-3">
-                        {arrPopularReload !== undefined && arrPopularReload.length !== 0 ? arrPopularReload.slice(0,8).map((item:{id:number, popularity: number; backdrop_path: string; original_title: string; genre_ids: []; })=> <SectionOneItem key={item.id} arrId={arrGanre} arr={item}/> ) : null}				    
-			    		{arrPopularReload !== undefined && arrPopularReload.length !== 0 && size !== null && size < 768 && size >= 640  ? arrPopularReload.slice(0,6).map((item:{id:number, popularity: number; backdrop_path: string; original_title: string; genre_ids: []; })=> <SectionOneItem key={item.id} arrId={arrGanre} arr={item}/> ) : null}
-			    		{arrPopularReload !== undefined && arrPopularReload.length !== 0 && size !== null && size < 640  ? arrPopularReload.slice(0,4).map((item:{id:number, popularity: number; backdrop_path: string; original_title: string; genre_ids: []; })=> <SectionOneItem key={item.id} arrId={arrGanre} arr={item}/> ) : null}
+                        {arrPopularReload !== undefined && arrPopularReload.length !== 0 ? arrPopularReload.slice(0,8).map((item:{id:number, popularity: number; backdrop_path: string; original_title: string; genre_ids: []; })=> <SectionOneItem type="movie" key={item.id} arrId={arrGanre} arr={item}/> ) : null}				    
+			    		{arrPopularReload !== undefined && arrPopularReload.length !== 0 && size !== null && size < 768 && size >= 640  ? arrPopularReload.slice(0,6).map((item:{id:number, popularity: number; backdrop_path: string; original_title: string; genre_ids: []; })=> <SectionOneItem type="movie" key={item.id} arrId={arrGanre} arr={item}/> ) : null}
+			    		{arrPopularReload !== undefined && arrPopularReload.length !== 0 && size !== null && size < 640  ? arrPopularReload.slice(0,4).map((item:{id:number, popularity: number; backdrop_path: string; original_title: string; genre_ids: []; })=> <SectionOneItem type="movie" key={item.id} arrId={arrGanre} arr={item}/> ) : null}
 			    		{arrPopularReload.length === 0  ? (<p className="text-white transition ease-in-out cursor-pointer font-bold text-[18px] max-xl:text-[15px] w-full">К сожалению нричего не найденно😔</p>): null}
 			    	</div>
 			    	<div className="flex items-center justify-center text-white">

@@ -7,10 +7,12 @@ import { IoMdMenu, IoMdSearch} from 'react-icons/io'
 import { SlSocialVkontakte } from 'react-icons/sl'
 
 type HeadeerProps = {
-    setModalHandle: React.Dispatch<SetStateAction<boolean>>
+    setModalHandle: React.Dispatch<SetStateAction<boolean>>,
+    setSearchHandle:React.Dispatch<SetStateAction<boolean>>
+
 }
 
-const Header=({setModalHandle}:HeadeerProps)=> {
+const Header=({setModalHandle ,setSearchHandle}:HeadeerProps)=> {
   return (
     <header className="flex w-full items-center max-xl:items-start max-[515px]:items-center justify-between backdrop-blur-md">
             <div className='flex flex-col gap-[10px] items-center max-[515px]:flex-row'>
@@ -64,7 +66,7 @@ const Header=({setModalHandle}:HeadeerProps)=> {
                 </div>
             </div>
             <div className="flex item-center gap-3">
-                <div className="w-[55px] h-[55px] bg-white rounded-[10px] items-center justify-center cursor-pointer hidden xl:flex">
+                <div onClick={()=> setSearchHandle(true)} className="w-[55px] h-[55px] bg-white rounded-[10px] items-center justify-center cursor-pointer hidden xl:flex">
                     <IoMdSearch size={30} color="#3657CB"/>
 			    </div>
 			    <button type="button" className="text-white py-[13px] px-[45px]  max-xl:px-[30px] max-xl:py-[10px] max-md:py-[8px] max-md:px-[26px] max-[426px]:py-[6px] max-[426px]:px-[13px] bg-[#3657CB] rounded-[10px] font-bold max-lg:font-medium text-[16px] max-lg:[14px] max-sm:text-[11px] cursor-pointer hover:drop-shadow-[0px_0px_15px_rgba(72,113,255,0.8)] ease-in-out duration-300">Войти</button>
@@ -75,6 +77,7 @@ const Header=({setModalHandle}:HeadeerProps)=> {
                     <div className='bg-red-600 w-[56px] h-[56px] rounded-full max-md:w-[37px] max-md:h-[37px]'></div>
                 </div> */}
 		    </div>
+            
     </header>
   )
 }
