@@ -149,6 +149,67 @@ export default function Home() {
 		}))
 	}
 
+	const filterGanres = [
+		{
+			title: "Все",
+			id: "all"
+		},
+		{
+			title: "Боевик",
+			id: "28"
+		},
+		{
+			title: "Приключения",
+			id: "12"
+		},
+		{
+			title: "Комедия",
+			id: "35"
+		},
+		{
+			title: "Фантастика",
+			id: "878"
+		},
+		{
+			title: "Триллер",
+			id: "53"
+		},
+		{
+			title: "Драма",
+			id: "18"
+		},
+	] 
+	const filterDate = [
+		{
+			title: "Всё время",
+			id: "all"
+		},
+		{
+			title: "2023",
+			id: "2023"
+		},
+		{
+			title: "2022",
+			id: "2022"
+		},
+		{
+			title: "2021",
+			id: "2021"
+		},
+		{
+			title: "2020",
+			id: "2020"
+		},
+		{
+			title: "2019",
+			id: "2019"
+		},
+		{
+			title: "2018",
+			id: "2018"
+		},
+	] 
+
     return (
 		<AppLayout>
 			    <section className="section1 flex flex-col justify-center mb-14 max-md:mb-6 max-sm:mb-8">
@@ -156,25 +217,18 @@ export default function Home() {
 			    		<h1 className="text-white font-black text-[65px] max-[1580px]:text-[50px] max-xl:text-[40px] max-sm:text-[32px]">Сейчас в кино</h1>
 			    		<AiOutlineMinus size={60} color="white" className="max-[1765px]:hidden"/>
 			    		<div className="flex items-center gap-[25px] max-xl:gap-5 max-sm:hidden">
-			    			<span onClick={(e)=> filterFilmsWithGanre(e.target)} className="text-[#696F78FF] hover:text-white transition ease-in-out cursor-pointer font-bold text-[18px] max-xl:text-[15px]" id="all">Все</span>
-			    			<span onClick={(e)=> filterFilmsWithGanre(e.target)} className="text-[#696F78FF] hover:text-white transition ease-in-out cursor-pointer font-bold text-[18px] max-xl:text-[15px]" id="28">Боевик</span>
-			    			<span onClick={(e)=> filterFilmsWithGanre(e.target)} className="text-[#696F78FF] hover:text-white transition ease-in-out cursor-pointer font-bold text-[18px] max-xl:text-[15px]" id="12">Приключения</span>
-			    			<span onClick={(e)=> filterFilmsWithGanre(e.target)} className="text-[#696F78FF] hover:text-white transition ease-in-out cursor-pointer font-bold text-[18px] max-xl:text-[15px]" id="35">Комедия</span>
-			    			<span onClick={(e)=> filterFilmsWithGanre(e.target)} className="text-[#696F78FF] hover:text-white transition ease-in-out cursor-pointer font-bold text-[18px] max-xl:text-[15px]" id="878">Фантастика</span>
-			    			<span onClick={(e)=> filterFilmsWithGanre(e.target)} className="text-[#696F78FF] hover:text-white transition ease-in-out cursor-pointer font-bold text-[18px] max-xl:text-[15px]" id="53">Триллер</span>
-			    			<span onClick={(e)=> filterFilmsWithGanre(e.target)} className="text-[#696F78FF] hover:text-white transition ease-in-out cursor-pointer font-bold text-[18px] max-xl:text-[15px]" id="18">Драма</span>
+							{
+								filterGanres.map((item:{id:string,title:string})=> <span  key={item.id} onClick={(e)=> filterFilmsWithGanre(e.target)} className="text-[#696F78FF] hover:text-white transition ease-in-out cursor-pointer font-bold text-[18px] max-xl:text-[15px]" id={item?.id}>{item?.title}</span> )
+							}
+			    			
 			    		</div>
 			    		<IoMdMenu color="white" onClick={()=> setFilterModalOne(true)} size={25} className="hidden max-sm:block cursor-pointer"/>
 			    		{filterModalOne ? 
 			    		    <div className="absolute top-0 right-0 backdrop-blur-xl p-3 border-2 border-white flex flex-col gap-2 rounded-md z-10">
 			    		        <MdOutlineClose onClick={()=> setFilterModalOne(false)} size={25} className="absolute top-1 right-1 cursor-pointer" color="white"/>
-			    		        <span onClick={(e)=> {filterFilmsWithGanre(e.target); setFilterModalOne(false)}} id="all" className="text-white cursor-pointer font-bold text-[15px]">Все</span>
-			    		    	<span onClick={(e)=> {filterFilmsWithGanre(e.target); setFilterModalOne(false)}} id="28" className="text-[grey] cursor-pointer font-bold text-[15px]">Боевики</span>
-			    		    	<span onClick={(e)=> {filterFilmsWithGanre(e.target); setFilterModalOne(false)}} id="12" className="text-[grey] cursor-pointer font-bold text-[15px]">Приключения</span>
-			    		    	<span onClick={(e)=> {filterFilmsWithGanre(e.target); setFilterModalOne(false)}} id="35" className="text-[grey] cursor-pointer font-bold text-[15px]">Комедии</span>
-			    		    	<span onClick={(e)=> {filterFilmsWithGanre(e.target); setFilterModalOne(false)}} id="878" className="text-[grey] cursor-pointer font-bold text-[15px]">Фантастика</span>
-			    		    	<span onClick={(e)=> {filterFilmsWithGanre(e.target); setFilterModalOne(false)}} id="53" className="text-[grey] cursor-pointer font-bold text-[15px]">Триллеры</span>
-			    		    	<span onClick={(e)=> {filterFilmsWithGanre(e.target); setFilterModalOne(false)}} id="18" className="text-[grey] cursor-pointer font-bold text-[15px]">Драма</span>
+								{
+								    filterGanres.map((item:{id:string,title:string})=> <span  key={item.id} onClick={(e)=> {filterFilmsWithGanre(e.target); setFilterModalOne(false)}} id={item?.id} className="text-[grey] cursor-pointer font-bold text-[15px]">{item?.title}</span> )
+							    }
 			    		    </div> 
 			    			: null
 			    		}
@@ -247,25 +301,18 @@ export default function Home() {
 			        		<h1 className="text-white font-black text-[65px] max-[1580px]:text-[50px] max-xl:text-[40px] max-sm:text-[32px]">Популярные фильмы</h1>
 			        		<AiOutlineMinus size={60} color="white" className="max-[1765px]:hidden"/>
 			        		<div className="flex items-center gap-[25px] max-xl:gap-5 max-sm:hidden">
-			        			<span id="all"  onClick={filterPopularFilmsWithDate} className="text-[grey] hover:text-white cursor-pointer font-bold text-[18px] max-xl:text-[15px]">Всё время</span>
-			        			<span id="2023" onClick={filterPopularFilmsWithDate}  className="text-[grey] hover:text-white cursor-pointer font-bold text-[18px] max-xl:text-[15px]">2023</span>
-			        			<span id="2022" onClick={filterPopularFilmsWithDate}  className="text-[grey] hover:text-white cursor-pointer font-bold text-[18px] max-xl:text-[15px]">2022</span>
-			        			<span id="2021" onClick={filterPopularFilmsWithDate}  className="text-[grey] hover:text-white cursor-pointer font-bold text-[18px] max-xl:text-[15px]">2021</span>
-			        			<span id="2020" onClick={filterPopularFilmsWithDate}  className="text-[grey] hover:text-white cursor-pointer font-bold text-[18px] max-xl:text-[15px]">2020</span>
-			        			<span id="2019" onClick={filterPopularFilmsWithDate}  className="text-[grey] hover:text-white cursor-pointer font-bold text-[18px] max-xl:text-[15px]">2019</span>
-			        			<span id="2018" onClick={filterPopularFilmsWithDate}  className="text-[grey] hover:text-white cursor-pointer font-bold text-[18px] max-xl:text-[15px]">2018</span>
+								{
+									filterDate.map((item:any)=> <span key={item.id} id={item?.id}  onClick={filterPopularFilmsWithDate} className="text-[grey] hover:text-white cursor-pointer font-bold text-[18px] max-xl:text-[15px]">{item?.title}</span>)
+								}
+			        			
 			        		</div>
 			        		<IoMdMenu color="white" onClick={()=> setFilterModalTwo(true)} size={25} className="hidden max-sm:block cursor-pointer"/>
 			        		{filterModalTwo ? 
 			        		    <div className="absolute top-0 right-0 backdrop-blur-xl p-5 pr-8 border-2 border-white flex flex-col gap-2 rounded-md z-10">
 			        		        <MdOutlineClose onClick={()=> setFilterModalTwo(false)} size={25} className="absolute top-1 right-1 cursor-pointer" color="white"/>
-			        		        <span id="all"  onClick={(e)=>{filterPopularFilmsWithDate(e); setFilterModalTwo(false)}} className="text-[grey] hover:text-white cursor-pointer font-bold text-[15px]">Всё</span>
-			        		    	<span id="2023" onClick={(e)=>{filterPopularFilmsWithDate(e); setFilterModalTwo(false)}} className="text-[grey] hover:text-white cursor-pointer font-bold text-[15px]">2023</span>
-			        		    	<span id="2022" onClick={(e)=>{filterPopularFilmsWithDate(e); setFilterModalTwo(false)}} className="text-[grey] hover:text-white cursor-pointer font-bold text-[15px]">2022</span>
-			        		    	<span id="2021" onClick={(e)=>{filterPopularFilmsWithDate(e); setFilterModalTwo(false)}} className="text-[grey] hover:text-white cursor-pointer font-bold text-[15px]">2021</span>
-			        		    	<span id="2020" onClick={(e)=>{filterPopularFilmsWithDate(e); setFilterModalTwo(false)}} className="text-[grey] hover:text-white cursor-pointer font-bold text-[15px]">2020</span>
-			        		    	<span id="2019" onClick={(e)=>{filterPopularFilmsWithDate(e); setFilterModalTwo(false)}} className="text-[grey] hover:text-white cursor-pointer font-bold text-[15px]">2019</span>
-			        		    	<span id="2018" onClick={(e)=>{filterPopularFilmsWithDate(e); setFilterModalTwo(false)}} className="text-[grey] hover:text-white cursor-pointer font-bold text-[15px]">2018</span>
+			        		        {
+									    filterDate.map((item:any)=> <span id={item.id} onClick={(e)=>{filterPopularFilmsWithDate(e); setFilterModalTwo(false)}} className="text-[grey] hover:text-white cursor-pointer font-bold text-[15px]">{item.title}</span>)
+								    }
 			        		    </div> 
 			        			: null
 			        		}

@@ -11,10 +11,16 @@ import ActorFilms from "@/Components/actor_childs/ActorFilmsComponent";
 import axios from "axios";
 import { APIkey } from "@/pages";
 import SearchComponent from "@/Components/SearchComponent";
+import { useForm, SubmitHandler } from "react-hook-form";
 
 type AppLayoutProps = {
   children: React.ReactNode;
 };
+
+type Inputs = {
+	value: string,
+	exampleRequired: string,
+  };
 
 const AppLayout = ({ children }: AppLayoutProps) => {
     const [modalHandle, setModalHandle] = useState<boolean>(false)
@@ -29,12 +35,11 @@ const AppLayout = ({ children }: AppLayoutProps) => {
         setTimeout(()=> setLoading(true) , 3000)
     }, [])
 
-	function searching(params:any) {
-		axios.get(`https://api.themoviedb.org/3/search/multi?api_key=${APIkey}&language=en-US&query=${params?.target?.value}&page=1&include_adult=false`)
+	const { register, handleSubmit, watch, formState: { errors } } = useForm<Inputs>();
+    const onSubmit: SubmitHandler<Inputs> = data => {
+		axios.get(`https://api.themoviedb.org/3/search/multi?api_key=${APIkey}&language=en-US&query=${data.value}&page=1&include_adult=false`)
 		    .then(res => {
 				if(res.status === 200 || res.status === 201){
-					console.log(res.data.results);
-					
 					setSearchArrPerson(
 						res?.data?.results?.filter((item: any)=>{
 						    if(item?.media_type === "person"){
@@ -58,11 +63,12 @@ const AppLayout = ({ children }: AppLayoutProps) => {
 					)
 				}
 			})
-	}
+	};
 	
   return (
 	<>
-        {loading? (
+        {
+		    loading? (
             <div className="w-[75%] max-lg:w-[80%] max-md:w-[90%] content-center m-auto mt-7" id="toStart">
 	        	<Header setModalHandle={setModalHandle} setSearchHandle={setSearchHandle}/>
                 <main className="my-[50px] max-lg:my-[32px] max-sm:my-[26px]">{children}</main>
@@ -74,25 +80,56 @@ const AppLayout = ({ children }: AppLayoutProps) => {
 	        	    </div>
                 </Link>
             </div>
-		)
-		:
-		(<Preloader/>)
-            
-	    }
+		    )
+		    :
+		    (<Preloader/>)
+		}
 		{
 			searchHandle ? (
-				<div className='fixed top-0 z-10 w-full min-h-screen backdrop-blur-sm bg-black/40 '>
-			        <div className="contener  w-[70%] m-auto pt-10">
-                        <div className="bg-white rounded-xl p-[10px] pl-5 flex items-center justify-between gap-5 mb-5">
-                            <input onKeyUp={(e)=> searching(e)} title="search" type="text" className="h-10 w-full text-[20px] font-medium outline-none"/>
-			        		<div className="w-[55px] h-[55px] bg-[#F2F60F] rounded-[10px] items-center justify-center cursor-pointer hidden xl:flex">
-                                <IoMdSearch size={30} color="#000000"/>
-			                </div>
-							<MdClose onClick={()=> setSearchHandle(false)} size={40} className="cursor-pointer"/>
-			            </div>
-						<p className="text-white font-semibold text-[22px]">Фильмы</p>
-						<div className="flex flex-col gap-5 rounded-2xl overflow-hidden">
-							{searchArrMovie.map((item:any)=> <SearchComponent data={item}/>)}
+				<div className='absolute left-0 top-0 z-10 w-full h-fit backdrop-blur-sm '>
+			        <div className="contener relative w-[70%] h-full m-auto pt-10">
+                        <div className="">
+							<form onSubmit={handleSubmit(onSubmit)}>
+						        <div className="bg-white rounded-xl p-[10px] pl-5 flex items-center justify-between gap-5 mb-5">
+                                    <input {...register("value")} type="text" className="h-10 w-full text-[20px] font-medium outline-none"/>
+			        		        <button type="submit" title="search" className="w-[55px] h-[55px] bg-[#F2F60F] rounded-[10px] items-center justify-center cursor-pointer hidden xl:flex">
+                                        <IoMdSearch size={30} color="#000000"/>
+			                        </button>
+							        <MdClose onClick={()=> setSearchHandle(false)} size={40} className="cursor-pointer"/>
+			                    </div>
+							</form>
+						    <div className="flex flex-col gap-5 overflow-hidden">
+								{
+									searchArrMovie.length > 0 ? (
+                                        <div className="rounded-xl border-2 border-white bg-[#1E2538] overflow-hidden">
+								        	<p className="text-white text-[22px] ml-3 mt-3 font-semibold">Фильмы</p>
+								        	{
+							                    searchArrMovie.map((item:any)=> <SearchComponent key={item.id} type={"movie"} data={item}/>)
+							                }
+								        </div>
+									):null
+								}
+								{
+									searchArrPerson.length > 0 ? (
+                                        <div className="rounded-xl border-2 border-white bg-[#1E2538] overflow-hidden">
+								        	<p className="text-white text-[22px] ml-3 mt-3 font-semibold">Актёры</p>
+								        	{
+							                    searchArrPerson.map((item:any)=> <SearchComponent key={item.id} type={"actor"} data={item}/>)
+							                }
+								        </div>
+									):null
+								}
+								{
+									searchArrTV.length > 0 ? (
+                                        <div className="rounded-xl border-2 border-white bg-[#1E2538] overflow-hidden">
+								        	<p className="text-white text-[22px] ml-3 mt-3 font-semibold">Сериалы</p>
+								        	{
+							                    searchArrTV.map((item:any)=> <SearchComponent key={item.id} type={"tv"} data={item}/>)
+							                }
+								        </div>
+									):null
+								}
+						    </div>
 						</div>
 			        </div>
                 </div>

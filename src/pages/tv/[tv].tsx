@@ -44,7 +44,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	  `https://api.themoviedb.org/3/tv/${router}?api_key=${APIkey}&page=1&`
 	);
 	const res2 = await fetch(
-	  `https://api.themoviedb.org/3/tv/${router}/credits?api_key=${APIkey}&language=ru-RU`,
+	  `https://api.themoviedb.org/3/tv/${router}/credits?api_key=${APIkey}&language=en-US`,
 	)
 
 	const res3 = await fetch(
@@ -79,6 +79,9 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   };
 
 const indexid = ({data , crew, tralerKeys, similar, ganreArr}: any) => {	
+
+	console.log(tralerKeys);
+	
 
 	const [like, setLike] = useState(false)
 
@@ -133,17 +136,6 @@ const indexid = ({data , crew, tralerKeys, similar, ganreArr}: any) => {
 		} 
 	  })
 
-	const directing1 = crew?.cast?.filter((item:any)=>{
-			if(item?.known_for_department === "Directing"){
-				return item
-			} 
-		  })
-
-	const directing2 = crew?.crew?.filter((item:any)=>{
-			if(item?.known_for_department === "Directing"){
-				return item
-			} 
-		  })
   return (
     <AppLayout>
 		<div className="absolute top-0 left-0 w-full h-[130%] overflow-hidden -z-[1]">
@@ -164,9 +156,9 @@ const indexid = ({data , crew, tralerKeys, similar, ganreArr}: any) => {
                             <span className="text-[#4F5B7C] font-semibold max-lg:font-medium">Фильмы </span>
 						</Link>
 						<BsChevronRight color="#4F5B7C"/>
-						<p className="text-white font-semibold max-lg:font-medium">{data?.title}</p>
+						<p className="text-white font-semibold max-lg:font-medium">{data?.name}</p>
 					</div>
-					<h1 className="text-white text-[65px] max-xl:text-[40px] font-black">{data?.title}</h1>
+					<h1 className="text-white text-[65px] max-xl:text-[40px] font-black">{data?.name}</h1>
 					<div className="w-[100px] h-[100px] max-xl:w-[70px] max-xl:h-[70px] relative flex flex-col items-center gap-2 mb-10">
 					    <Doughnut
                             data={data1}
@@ -178,12 +170,19 @@ const indexid = ({data , crew, tralerKeys, similar, ganreArr}: any) => {
 					<p className="text-white font-medium text-[20px] max-xl:text-[15px] mb-[30px] max-xl:mb-5">
 						{data?.overview}
 					</p>
-					<Link href="#trailerBlock">
-					    <div className="w-fit border-4 border-white rounded-xl flex items-center gap-4 justify-center px-[35px] max-xl:px-[30px] py-5 max-xl:py-[17px] cursor-pointer">  
-					    	<Image src={"/icons/play-icon.svg"} width={20} height={20 } className="max-xl:w-[15px] max-xl:h-[15px]" alt=""/>
-					    	<p className="text-white text-[18px] max-xl:text-[15px] font-bold">Смотреть трейлер</p>
-					    </div>
-					</Link>
+					{
+						tralerKeys?.results.length >0 ? (
+							<Link href="#trailerBlock">
+					            <div className="w-fit border-4 border-white rounded-xl flex items-center gap-4 justify-center px-[35px] max-xl:px-[30px] py-5 max-xl:py-[17px] cursor-pointer">  
+					            	<Image src={"/icons/play-icon.svg"} width={20} height={20 } className="max-xl:w-[15px] max-xl:h-[15px]" alt=""/>
+					            	<p className="text-white text-[18px] max-xl:text-[15px] font-bold">Смотреть трейлер</p>
+					            </div>
+					        </Link>
+						)
+						:
+						null
+					}
+					
 				</div>
 			</div>
 			<div className="flex items-center justify-start gap-5 mb-10">
@@ -209,7 +208,7 @@ const indexid = ({data , crew, tralerKeys, similar, ganreArr}: any) => {
                                 Год:
                             </th>
                             <td className="py-4 text-[18px] font-medium text-[#F2F60F] ">
-                                {data?.release_date !== undefined ? data?.release_date : "null" }
+                                {data?.first_air_date !== undefined ? data?.first_air_date : "null" }
                             </td>
                         </tr>
 						<tr>
@@ -217,7 +216,7 @@ const indexid = ({data , crew, tralerKeys, similar, ganreArr}: any) => {
                                 Страна:
                             </th>
                             <td className="py-4 text-[18px] font-medium text-[#F2F60F] ">
-                                {data?.production_countries[0]?.name  !== undefined ? data?.production_countries[0]?.name : "null"}
+                                {data?.origin_country[0]  !== undefined ? data?.origin_country[0] : "null"}
                             </td>
                         </tr>
 						<tr>
@@ -225,7 +224,7 @@ const indexid = ({data , crew, tralerKeys, similar, ganreArr}: any) => {
                                 Слоган:
                             </th>
                             <td className="py-4 text-[18px] font-medium text-[#F2F60F] ">
-							    {data?.tagline !== undefined ? data?.tagline : "null" }
+							    {data?.tagline !== undefined && data?.tagline.length > 0 ? data?.tagline : "null" }
                             </td>
                         </tr>
                     </tbody>
@@ -237,7 +236,7 @@ const indexid = ({data , crew, tralerKeys, similar, ganreArr}: any) => {
 							    Режиссер:
                             </th>
                             <td className="py-4 text-[18px] font-medium text-[#F2F60F] ">
-                                {directing1 !== null  && directing1?.at(0)?.name !== undefined ? directing1?.at(-1)?.name : directing2?.at(-1)?.name }
+                                {data?.created_by !== null  && data?.created_by.length>0  ? data?.created_by?.at(-1)?.name : null }
                             </td>
                         </tr>
 						<tr>
@@ -248,53 +247,60 @@ const indexid = ({data , crew, tralerKeys, similar, ganreArr}: any) => {
 							    {data?.genres?.at(1)?.name !== undefined ? data?.genres?.at(1)?.name : "null" }
                             </td>
                         </tr>
-						<tr>
-                            <th className="py-4 text-[18px] font-medium text-white pr-10">
-							    Время:
-                            </th>
-                            <td className="py-4 text-[18px] font-medium text-[#F2F60F] ">
-							    {data?.runtime !== undefined ? data?.runtime : "null" }мин.
-                            </td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
 		</section>
-		<section className="section2 mb-[75px] max-xl:mb-[50px] max-lg:mb-[45px]">
-		    <div className="flex items-center justify-between mb-[40px] max-sm:flex-col max-sm:gap-2 max-sm:mb-2">
-				<h1 className="text-white font-black text-[65px] max-[1580px]:text-[50px] max-xl:text-[40px] max-sm:text-[32px]">В главных ролях:</h1>
-				<div className="flex items-center gap-5 cursor-pointer">
-					<p className="text-white text-[22px] max-xl:text-[18px] font-bold">Все актёры</p>
-					<BsArrowRight color="white" size={26}/>
-				</div>
-			</div>
-            <div className="grid grid-cols-5 max-xl:grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 gap-12 max-xl:gap-[40px]">
-				{actiorArr?.slice(0 , 10)?.map((item:any)=> <Actiors data={item}/>)}
-			</div>
-		</section>
-        <section className="section3 mb-[75px] max-xl:mb-[50px] max-lg:mb-[45px]" id="trailerBlock">
-			<div className="flex items-center justify-between mb-[40px] max-sm:flex-col max-sm:gap-2 max-sm:mb-2">
-					<h1 className="text-white font-black text-[65px] max-[1580px]:text-[50px] max-xl:text-[40px] max-sm:text-[32px]">Трейлер фильма</h1>
-					<div className="flex items-center gap-5 cursor-pointer">
-						<p className="text-white text-[22px] max-xl:text-[18px] font-bold">Все трейлеры</p>
-						<BsArrowRight color="white" size={26}/>
-					</div>
-			</div>
-			<div className="mb-[50px] max-lg:mb-[30px] max-md:mb-[25px] max-sm:mb-[20px]">
-				<iframe title="trailer" src={`https://www.youtube.com/embed/${tralerKey?.at(-1)?.key}`} frameBorder="0" className="w-full h-[800px] rounded-xl mb-5 max-xl:h-[511px] max-lg:h-[450px] max-md:h-[370px] max-sm:h-[250px] max-[425px]:h-[200px]"></iframe>
-				<div className="flex items-center justify-between">
-                    <h1 className="text-white text-[45px] max-lg:text-[35px] max-md:text-[30px] max-sm:text-[25px] font-black">{data.title}</h1>
-					<div className="flex items-center gap-2">
-						<div className="bg-[#1B2133] w-[58px] h-[58px] max-lg:h-[40px] max-lg:w-[40px] max-md:h-[30px] max-md:w-[30px] rounded-xl flex items-center justify-center cursor-pointer">
-							<AiFillLike color="white" size={26} className="max-lg:w-[17px] max-lg:h-[17px] max-md:w-[13px] max-md:h-[13px] "/>
-						</div>
-						<div className="bg-[#1B2133] w-[58px] h-[58px] max-lg:h-[40px] max-lg:w-[40px] max-md:h-[30px] max-md:w-[30px] rounded-xl flex items-center justify-center cursor-pointer">
-							<AiFillDislike color="white" size={26} className="max-lg:w-[17px] max-lg:h-[17px] max-md:w-[13px] max-md:h-[13px] "/>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
+		{
+			actiorArr.length > 0 ? (
+				<section className="section2 mb-[75px] max-xl:mb-[50px] max-lg:mb-[45px]">
+		            <div className="flex items-center justify-between mb-[40px] max-sm:flex-col max-sm:gap-2 max-sm:mb-2">
+		        		<h1 className="text-white font-black text-[65px] max-[1580px]:text-[50px] max-xl:text-[40px] max-sm:text-[32px]">В главных ролях:</h1>
+						<Link href={"/actor"}>
+		        		    <div className="flex items-center gap-5 cursor-pointer">
+		        		    	<p className="text-white text-[22px] max-xl:text-[18px] font-bold">Все актёры</p>
+		        		    	<BsArrowRight color="white" size={26}/>
+		        		    </div>
+						</Link>
+		        	</div>
+                    <div className="grid grid-cols-5 max-xl:grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 gap-12 max-xl:gap-[40px]">
+		        		{actiorArr?.slice(0 , 10)?.map((item:any)=> <Actiors data={item}/>)}
+		        	</div>
+		        </section>
+			)
+			:
+			null
+		}
+		{
+			tralerKeys?.results.length >0 ? (
+				<section className="section3 mb-[75px] max-xl:mb-[50px] max-lg:mb-[45px]" id="trailerBlock">
+		        	<div className="flex items-center justify-between mb-[40px] max-sm:flex-col max-sm:gap-2 max-sm:mb-2">
+		        		<h1 className="text-white font-black text-[65px] max-[1580px]:text-[50px] max-xl:text-[40px] max-sm:text-[32px]">Трейлер фильма</h1>
+		        		<div className="flex items-center gap-5 cursor-pointer">
+		        			<p className="text-white text-[22px] max-xl:text-[18px] font-bold">Все трейлеры</p>
+		        			<BsArrowRight color="white" size={26}/>
+		        		</div>
+		        	</div>
+		        	<div className="mb-[50px] max-lg:mb-[30px] max-md:mb-[25px] max-sm:mb-[20px]">
+		        		<iframe title="trailer" src={`https://www.youtube.com/embed/${tralerKey[0]?.key}`} frameBorder="0" className="w-full h-[800px] rounded-xl mb-5 max-xl:h-[511px] max-lg:h-[450px] max-md:h-[370px] max-sm:h-[250px] max-[425px]:h-[200px]"></iframe>
+		        		<div className="flex items-center justify-between">
+                            <h1 className="text-white text-[45px] max-lg:text-[35px] max-md:text-[30px] max-sm:text-[25px] font-black">{data.title}</h1>
+		        			<div className="flex items-center gap-2">
+		        				<div className="bg-[#1B2133] w-[58px] h-[58px] max-lg:h-[40px] max-lg:w-[40px] max-md:h-[30px] max-md:w-[30px] rounded-xl flex items-center justify-center cursor-pointer">
+		        					<AiFillLike color="white" size={26} className="max-lg:w-[17px] max-lg:h-[17px] max-md:w-[13px] max-md:h-[13px] "/>
+		        				</div>
+		        				<div className="bg-[#1B2133] w-[58px] h-[58px] max-lg:h-[40px] max-lg:w-[40px] max-md:h-[30px] max-md:w-[30px] rounded-xl flex items-center justify-center cursor-pointer">
+		        					<AiFillDislike color="white" size={26} className="max-lg:w-[17px] max-lg:h-[17px] max-md:w-[13px] max-md:h-[13px] "/>
+		        				</div>
+		        			</div>
+		        		</div>
+		        	</div>
+		        </section>
+			)
+			:
+			null
+		}
+        
 		{similar.length > 0 ? 
 			<section className="section4 mb-[75px] max-xl:mb-[50px] max-lg:mb-[45px]">
 		    <div className="flex justify-center mb-[40px] max-sm:mb-2">
@@ -308,9 +314,6 @@ const indexid = ({data , crew, tralerKeys, similar, ganreArr}: any) => {
                 >
 					{similar?.map((item: any)=> (
 						<SwiperSlide key={item.id} 
-						// onClick={(e)=>{
-                        //     // trailSlider(item?.id)
-						// }}
 						>
 							<SectionOneItem key={item.id} arr={item} type="tv" arrId={ganreArr}/> 
                         </SwiperSlide>

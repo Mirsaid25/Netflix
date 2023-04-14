@@ -32,7 +32,7 @@ const index = () => {
 		    .then(res5 => setArr5(res5.data.results))
 
 	    axios.get(`https://api.themoviedb.org/3/person/popular?api_key=${APIkey}&language=en-US&page=6`)
-		    .then(res6 => setArr5(res6.data.results))
+		    .then(res6 => setArr6(res6.data.results))
 	  
 	}, [])
 	
@@ -50,7 +50,7 @@ const index = () => {
 				<p className="text-white font-semibold max-lg:font-medium">Актёры</p>
 			</div>
 		</div>
-		<div className='grid grid-cols-4 gap-5'>
+		<div className='grid grid-cols-4 max-lg:grid-cols-3 max-sm:grid-cols-2 gap-5'>
 			{
 				arr1?.map((item:any)=> <Actiors data={item}/>)
 			}
