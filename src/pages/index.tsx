@@ -21,7 +21,6 @@ import axios from "axios";
 import dynamic from 'next/dynamic'
 import MyLoader from "@/Components/MyLoader";
 import Link from "next/link";
-import Preloader from "@/Components/Preloader";
 
 const SectionOneItem = dynamic(() => import('@/Components/index_child/sectionOneItem'), {
   loading: () => <p className="text-[white] font-black text-[50px]">{<MyLoader/>}</p>,
@@ -242,7 +241,7 @@ export default function Home() {
 			    	    <button className="border-2 border-white px-11 max-lg:px-[34px] max-md:px-[32px] py-5 max-lg:py-[16px] max-md:py-[11px] rounded-xl text-white text-lg max-lg:text-base font-bold m-auto" title="Все новинки">Все новинки</button>
 			    	</Link>
 			    </section>
-			    <section className="section2 mb-[75px]">
+			    <section className="section2 mb-[75px] max-lg:mb-11 max-md:mb-6">
 			    	<div className="flex items-center justify-between mb-[40px] max-sm:flex-col max-sm:gap-2 max-sm:mb-2">
 			    		<h1 className="text-white font-black text-[65px] max-[1580px]:text-[50px] max-xl:text-[40px] max-sm:text-[32px]">Новые трейлеры</h1>
 			    		<div className="flex items-center gap-5 cursor-pointer">
@@ -251,7 +250,7 @@ export default function Home() {
 			    		</div>
 			    	</div>
 			    	<div className="mb-[50px] max-lg:mb-[30px] max-md:mb-[25px] max-sm:mb-[20px]">
-			    		<iframe title="trailer" src={`https://www.youtube.com/embed/${trailerKey}`} frameBorder="0" className="w-full h-[800px] rounded-xl mb-5 max-xl:h-[511px] max-lg:h-[450px] max-md:h-[370px] max-sm:h-[250px] max-[425px]:h-[200px]"></iframe>
+			    		<iframe title="trailer" src={`https://www.youtube.com/embed/${trailerKey}`} frameBorder="0" className="w-full object-cover rounded-xl mb-5 h-[600px] max-xl:h-[500px] max-lg:h-[400px] max-md:h-[350px] max-sm:h-[200px]"></iframe>
 			    		<div className="flex items-center justify-between">
                             <h1 className="text-white text-[45px] max-lg:text-[35px] max-md:text-[30px] max-sm:text-[25px] font-black">{trailerName}</h1>
 			    			<div className="flex items-center gap-2">
@@ -281,7 +280,7 @@ export default function Home() {
                                   <img
                                     src={`https://www.themoviedb.org/t/p/w220_and_h330_face/${item?.backdrop_path}`}
                                     alt=""
-                                    className="w-full h-full"
+                                    className="w-full h-full object-cover"
                                   />
                                   <img
                                     src={"/image/main/play_icon.svg"}
@@ -296,7 +295,7 @@ export default function Home() {
                           ...
                     </Swiper>
 			    </section>
-			    <section className="section3 mb-[65px]">
+			    <section className="section3 mb-[65px] max-lg:mb-11 max-md:mb-6">
 			        <div className="flex relative items-center justify-between gap-20 mb-10 max-lg:mb-5 max-sm:mb-3 max-2xl:flex-col max-2xl:items-start max-2xl:gap-1 max-sm:items-center max-sm:justify-center max-sm:flex-row max-sm:gap-4">
 			        		<h1 className="text-white font-black text-[65px] max-[1580px]:text-[50px] max-xl:text-[40px] max-sm:text-[32px]">Популярные фильмы</h1>
 			        		<AiOutlineMinus size={60} color="white" className="max-[1765px]:hidden"/>
@@ -327,13 +326,13 @@ export default function Home() {
 			    	    <Pagination count={20} variant="text" onChange={handleChange} size="large" color="primary" />
 			    	</div>
 			    </section>
-			    <section className="section4 mb-[65px]">
+			    <section className="section4 mb-[65px] max-lg:mb-11 max-md:mb-6">
 			        <h1 className="text-white font-black text-[65px] max-[1580px]:text-[50px] max-xl:text-[40px] max-sm:text-[32px] mb-[30px]">Популярные персоны</h1>
 			    	<div className="grid grid-cols-3 max-lg:grid-cols-2 gap-5 max-md:gap-3">
 			    		<Link href={{pathname:`/actor/&`, query:{id:popularPersonsArr[0]?.id}}}>
-			    			<div className={"h-[444px] overflow-hidden relative max-xl:h-[300px] max-lg:h-[300px] max-md:h-[321px] max-sm:h-[250px] max-[425px]:h-[180px] py-3 px-4 rounded-xl w-full  bg-no-repeat bg-cover bg-center flex flex-col items-start justify-between"}>
+			    			<div className={"h-[444px] overflow-hidden object-cover relative max-xl:h-[300px] max-lg:h-[300px] max-md:h-[321px] max-sm:h-[250px] max-[425px]:h-[180px] py-3 px-4 rounded-xl w-full  bg-no-repeat bg-cover bg-center flex flex-col items-start justify-between"}>
 			    			    {popularPersonsArr.length > 1 ? 
-			    			        <img className="w-full h-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-[1]" src={`https://www.themoviedb.org/t/p/w220_and_h330_face/${popularPersonsArr[0].profile_path}`} alt="" />
+			    			        <img className="w-full h-full object-cover absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  -z-[1]" src={`https://www.themoviedb.org/t/p/w220_and_h330_face/${popularPersonsArr[0].profile_path}`} alt="" />
 			    			    :
 			    			        null
 			    		        }
@@ -346,7 +345,7 @@ export default function Home() {
                         <Link href={{pathname:`/actor/&`, query:{id:popularPersonsArr[1]?.id}}}>
                             <div className={`h-[444px] overflow-hidden relative max-xl:h-[300px] max-lg:h-[300px] max-md:h-[321px] max-sm:h-[250px] max-[425px]:h-[180px] py-3 px-4 rounded-xl w-full bg-no-repeat bg-cover bg-center flex flex-col items-start justify-between`}>
 			    		        {popularPersonsArr.length > 1 ? 
-			    			        <img className="w-full h-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-[1]" src={`https://www.themoviedb.org/t/p/w220_and_h330_face/${popularPersonsArr[1]?.profile_path}`} alt="" />
+			    			        <img className="w-full h-full object-cover absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-[1]" src={`https://www.themoviedb.org/t/p/w220_and_h330_face/${popularPersonsArr[1]?.profile_path}`} alt="" />
 			    			    :
 			    			        null
 			    		        }

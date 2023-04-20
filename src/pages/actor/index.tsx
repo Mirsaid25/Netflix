@@ -36,8 +36,6 @@ const index = () => {
 	  
 	}, [])
 	
-// console.log(arr1);
-
   return (
     <AppLayout>
         <div className='mb-10'>
@@ -52,22 +50,22 @@ const index = () => {
 		</div>
 		<div className='grid grid-cols-4 max-lg:grid-cols-3 max-sm:grid-cols-2 gap-5'>
 			{
-				arr1?.map((item:any)=> <Actiors data={item}/>)
+				arr1?.map((item:any)=> <Actiors key={item.id} data={item}/>)
 			}
 			{
-				arr2?.map((item:any)=> <Actiors data={item}/>)
+				arr2?.map((item:any)=> <Actiors key={item.id} data={item}/>)
 			}
 			{
-				arr3?.map((item:any)=> <Actiors data={item}/>)
+				arr3?.map((item:any)=> <Actiors key={item.id} data={item}/>)
 			}
 			{
-				arr4?.map((item:any)=> <Actiors data={item}/>)
+				arr4?.map((item:any)=> <Actiors key={item.id} data={item}/>)
 			}
 			{
-				arr5?.map((item:any)=> <Actiors data={item}/>)
+				arr5?.map((item:any)=> <Actiors key={item.id} data={item}/>)
 			}
 			{
-				arr6?.map((item:any)=> <Actiors data={item}/>)
+				arr6?.map((item:any)=> <Actiors key={item.id} data={item}/>)
 			}
 		</div>
     </AppLayout>

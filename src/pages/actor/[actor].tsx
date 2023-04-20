@@ -101,47 +101,47 @@ const actor = ({data ,credits , images , ganres, search}:any) => {
 					</div>
 					{selectOne? (
                             <div className="relative flex w-full justify-between gap-[60px]">
-                                        <table className="w-full text-sm text-left text-gray-500">
-                                            <tbody>
+                                <table className="w-full text-sm text-left text-gray-500">
+                                    <tbody>
+                                        <tr>
+                                            <th className="py-4 text-[18px] font-bold text-white pr-10">
+						            		    День рождения:
+                                            </th>
+                                            <td className="py-4 text-[18px] font-bold text-[#F2F60F] ">
+                                                {data?.birthday !== undefined ? data?.birthday : "null" }
+                                            </td>
+                                        </tr>
+						            	{data?.deathday !== null ? (
                                                 <tr>
                                                     <th className="py-4 text-[18px] font-bold text-white pr-10">
-						                			    День рождения:
+						            				    День смерти:
                                                     </th>
                                                     <td className="py-4 text-[18px] font-bold text-[#F2F60F] ">
-                                                        {data?.birthday !== undefined ? data?.birthday : "null" }
+                                                        {data?.deathday  !== null ? data?.deathday : "null"}
                                                     </td>
                                                 </tr>
-						                		{data?.deathday !== null ? (
-                                                        <tr>
-                                                            <th className="py-4 text-[18px] font-bold text-white pr-10">
-						                					    День смерти:
-                                                            </th>
-                                                            <td className="py-4 text-[18px] font-bold text-[#F2F60F] ">
-                                                                {data?.deathday  !== null ? data?.deathday : "null"}
-                                                            </td>
-                                                        </tr>
-						                		    )
-						                		    :
-						                			null
-						                	    }
-				                        		<tr>
-                                                    <th className="py-4 text-[18px] font-bold text-white pr-10">
-                                                        Место рождения:
-                                                    </th>
-                                                    <td className="py-4 text-[18px] font-bold text-[#F2F60F] ">
-				                        			    {data?.place_of_birth !== null ? data?.place_of_birth : "null" }
-                                                    </td>
-                                                </tr>
-						                		<tr>
-                                                    <th className="py-4 text-[18px] font-bold text-white pr-10">
-						                			    Популярность:
-                                                    </th>
-                                                    <td className="py-4 text-[18px] font-bold text-[#F2F60F] ">
-				                        			    {data?.popularity !== null ? data?.popularity.toFixed(0) : "null" }
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+						            	    )
+						            	    :
+						            		null
+						                }
+				                    	<tr>
+                                            <th className="py-4 text-[18px] font-bold text-white pr-10">
+                                                Место рождения:
+                                            </th>
+                                            <td className="py-4 text-[18px] font-bold text-[#F2F60F] ">
+				                    		    {data?.place_of_birth !== null ? data?.place_of_birth : "null" }
+                                            </td>
+                                        </tr>
+						            	<tr>
+                                            <th className="py-4 text-[18px] font-bold text-white pr-10">
+						            		    Популярность:
+                                            </th>
+                                            <td className="py-4 text-[18px] font-bold text-[#F2F60F] ">
+				                    		    {data?.popularity !== null ? data?.popularity.toFixed(0) : "null" }
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
 					    ) 
 					    :

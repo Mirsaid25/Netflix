@@ -14,6 +14,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import {Scrollbar } from "swiper";
 import useWindowSize from "@rooks/use-window-size";
 import SectionOneItem from "@/Components/index_child/sectionOneItem";
+import { useRouter } from "next/router";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 type moveInfoT = {
@@ -80,8 +81,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 
 const indexid = ({data , crew, tralerKeys, similar, ganreArr}: any) => {	
 
-	console.log(tralerKeys);
-	
+	console.log();
 
 	const [like, setLike] = useState(false)
 
@@ -170,19 +170,6 @@ const indexid = ({data , crew, tralerKeys, similar, ganreArr}: any) => {
 					<p className="text-white font-medium text-[20px] max-xl:text-[15px] mb-[30px] max-xl:mb-5">
 						{data?.overview}
 					</p>
-					{
-						tralerKeys?.results.length >0 ? (
-							<Link href="#trailerBlock">
-					            <div className="w-fit border-4 border-white rounded-xl flex items-center gap-4 justify-center px-[35px] max-xl:px-[30px] py-5 max-xl:py-[17px] cursor-pointer">  
-					            	<Image src={"/icons/play-icon.svg"} width={20} height={20 } className="max-xl:w-[15px] max-xl:h-[15px]" alt=""/>
-					            	<p className="text-white text-[18px] max-xl:text-[15px] font-bold">Смотреть трейлер</p>
-					            </div>
-					        </Link>
-						)
-						:
-						null
-					}
-					
 				</div>
 			</div>
 			<div className="flex items-center justify-start gap-5 mb-10">
@@ -265,35 +252,6 @@ const indexid = ({data , crew, tralerKeys, similar, ganreArr}: any) => {
 		        	</div>
                     <div className="grid grid-cols-5 max-xl:grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 gap-12 max-xl:gap-[40px]">
 		        		{actiorArr?.slice(0 , 10)?.map((item:any)=> <Actiors data={item}/>)}
-		        	</div>
-		        </section>
-			)
-			:
-			null
-		}
-		{
-			tralerKeys?.results.length >0 ? (
-				<section className="section3 mb-[75px] max-xl:mb-[50px] max-lg:mb-[45px]" id="trailerBlock">
-		        	<div className="flex items-center justify-between mb-[40px] max-sm:flex-col max-sm:gap-2 max-sm:mb-2">
-		        		<h1 className="text-white font-black text-[65px] max-[1580px]:text-[50px] max-xl:text-[40px] max-sm:text-[32px]">Трейлер фильма</h1>
-		        		<div className="flex items-center gap-5 cursor-pointer">
-		        			<p className="text-white text-[22px] max-xl:text-[18px] font-bold">Все трейлеры</p>
-		        			<BsArrowRight color="white" size={26}/>
-		        		</div>
-		        	</div>
-		        	<div className="mb-[50px] max-lg:mb-[30px] max-md:mb-[25px] max-sm:mb-[20px]">
-		        		<iframe title="trailer" src={`https://www.youtube.com/embed/${tralerKey[0]?.key}`} frameBorder="0" className="w-full h-[800px] rounded-xl mb-5 max-xl:h-[511px] max-lg:h-[450px] max-md:h-[370px] max-sm:h-[250px] max-[425px]:h-[200px]"></iframe>
-		        		<div className="flex items-center justify-between">
-                            <h1 className="text-white text-[45px] max-lg:text-[35px] max-md:text-[30px] max-sm:text-[25px] font-black">{data.title}</h1>
-		        			<div className="flex items-center gap-2">
-		        				<div className="bg-[#1B2133] w-[58px] h-[58px] max-lg:h-[40px] max-lg:w-[40px] max-md:h-[30px] max-md:w-[30px] rounded-xl flex items-center justify-center cursor-pointer">
-		        					<AiFillLike color="white" size={26} className="max-lg:w-[17px] max-lg:h-[17px] max-md:w-[13px] max-md:h-[13px] "/>
-		        				</div>
-		        				<div className="bg-[#1B2133] w-[58px] h-[58px] max-lg:h-[40px] max-lg:w-[40px] max-md:h-[30px] max-md:w-[30px] rounded-xl flex items-center justify-center cursor-pointer">
-		        					<AiFillDislike color="white" size={26} className="max-lg:w-[17px] max-lg:h-[17px] max-md:w-[13px] max-md:h-[13px] "/>
-		        				</div>
-		        			</div>
-		        		</div>
 		        	</div>
 		        </section>
 			)

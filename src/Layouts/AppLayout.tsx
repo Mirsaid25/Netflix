@@ -25,6 +25,9 @@ type Inputs = {
 const AppLayout = ({ children }: AppLayoutProps) => {
     const [modalHandle, setModalHandle] = useState<boolean>(false)
     const [loading, setLoading] = useState(false)
+    const [token, settoken] = useState("")
+    const [sessionId, setSessionId] = useState("")
+
 
     const [searchHandle, setSearchHandle] = useState(false)
     const [searchArrPerson, setSearchArrPerson] = useState([])
@@ -32,10 +35,14 @@ const AppLayout = ({ children }: AppLayoutProps) => {
     const [searchArrTV, setSearchArrTV] = useState([])
 
     useEffect(()=>{
-        setTimeout(()=> setLoading(true) , 3000)
+	// 	axios.get(`https://api.themoviedb.org/3/authentication/token/new?api_key=${APIkey}`)
+	// 	    .then(res=> { settoken(res.data.request_token);})
+
+        setTimeout(()=> setLoading(true) , 2000)
     }, [])
 
 	const { register, handleSubmit, watch, formState: { errors } } = useForm<Inputs>();
+
     const onSubmit: SubmitHandler<Inputs> = data => {
 		axios.get(`https://api.themoviedb.org/3/search/multi?api_key=${APIkey}&language=en-US&query=${data.value}&page=1&include_adult=false`)
 		    .then(res => {
@@ -69,17 +76,23 @@ const AppLayout = ({ children }: AppLayoutProps) => {
 	<>
         {
 		    loading? (
-            <div className="w-[75%] max-lg:w-[80%] max-md:w-[90%] content-center m-auto mt-7" id="toStart">
-	        	<Header setModalHandle={setModalHandle} setSearchHandle={setSearchHandle}/>
-                <main className="my-[50px] max-lg:my-[32px] max-sm:my-[26px]">{children}</main>
-	        	<Foother/>
-	        	{modalHandle? <HeaderModal setModalHandle={setModalHandle}/> : null}
-                <Link href="#toStart">
-	        	    <div className="toTopIcon z-50 w-[73px] h-[73px] max-xl:w-[50px] max-xl:h-[50px] max-lg:w-[45px] max-lg:h-[45px] max-md:w-[40px] max-md:h-[40px] max-sm:w-[30px] max-sm:h-[30px] bg-[#100F14] rounded-xl max-md:rounded-md flex items-center justify-center fixed bottom-11 right-11 max-xl:bottom-8 max-xl:right-8 max-lg:bottom-5 max-lg:right-5 max-md:bottom-3 max-md:right-3 max-sm:bottom-2 max-sm:right-2 cursor-pointer">
-	        	    	<BsArrowUp color="white" className="w-[35px] h-[35px] max-xl:w-[25px] max-xl:h-[25px] max-lg:w-[22px] max-lg:h-[22px] max-md:w-[20px] max-md:h-[20px] max-sm:w-[16px] max-sm:h-[16px]"/>
-	        	    </div>
-                </Link>
-            </div>
+                <div className="w-[75%] max-lg:w-[80%] max-md:w-[90%] content-center m-auto mt-7" id="toStart">
+	            	<Header setModalHandle={setModalHandle} setSearchHandle={setSearchHandle}/>
+                    <main className="my-[50px] max-lg:my-[32px] max-sm:my-[26px]">{children}</main>
+	            	<Foother/>
+	            	{modalHandle? <HeaderModal setModalHandle={setModalHandle}/> : null}
+                    <Link href="#toStart">
+	            	    <div className="toTopIcon z-50 w-[73px] h-[73px] max-xl:w-[50px] max-xl:h-[50px] max-lg:w-[45px] max-lg:h-[45px] max-md:w-[40px] max-md:h-[40px] max-sm:w-[30px] max-sm:h-[30px] bg-[#100F14] rounded-xl max-md:rounded-md flex items-center justify-center fixed bottom-11 right-11 max-xl:bottom-8 max-xl:right-8 max-lg:bottom-5 max-lg:right-5 max-md:bottom-3 max-md:right-3 max-sm:bottom-2 max-sm:right-2 cursor-pointer">
+	            	    	<BsArrowUp color="white" className="w-[35px] h-[35px] max-xl:w-[25px] max-xl:h-[25px] max-lg:w-[22px] max-lg:h-[22px] max-md:w-[20px] max-md:h-[20px] max-sm:w-[16px] max-sm:h-[16px]"/>
+	            	    </div>
+                    </Link>
+					{/* {
+			            token.length >0 ? (
+					        <a href={`https://www.themoviedb.org/authenticate/${token}?redirect_to=http://localhost:3000/user`}>
+			                	<button title="submit" type="submit" className="w-full bg-[#F2F60F] text-[22px] font-semibold rounded-xl p-5 mb-5">Зарегистрироваться</button>
+			                </a>):null
+					} */}
+                </div>
 		    )
 		    :
 		    (<Preloader/>)
@@ -129,6 +142,9 @@ const AppLayout = ({ children }: AppLayoutProps) => {
 								        </div>
 									):null
 								}
+								{
+									searchArrMovie.length === 0 && searchArrPerson.length === 0 && searchArrTV.length === 0 ? (<p className="text-white ">k</p>): null
+								}
 						    </div>
 						</div>
 			        </div>
@@ -137,10 +153,29 @@ const AppLayout = ({ children }: AppLayoutProps) => {
 			:
 			null
 		}
-        
+        {/* <div className="w-full min-h-screen bg-[#191E2E] m-auto pt-14 flex items-start justify-center">
+			<form className="flex w-[40%] flex-col justify-center items-center">
+				<h1 className="text-white text-[45px] font-extrabold text-center mb-14">Войти</h1>
+				<input title="email" type="email" placeholder="Почта" required className="w-full text-white text-[18px] font-medium bg-[#212a47] rounded-xl p-5 mb-10 outline-none"/>
+				<input title="password" type="password" placeholder="Ваш пароль" required minLength={4} className="w-full text-white text-[18px] font-medium bg-[#212a47] rounded-xl p-5 mb-10 outline-none"/>
+				<button title="submit" type="submit" className="w-full bg-[#F2F60F] text-[22px] font-semibold rounded-xl p-5 mb-5">Войти</button>
+				<div title="singUp" className="w-full bg-[#212a47] flex items-center justify-center cursor-pointer text-white rounded-xl text-[22px] font-semibold p-5">Зарегистрироваться</div>
+			</form>
+			<form className="flex w-[40%] flex-col justify-center items-center">
+				<h1 className="text-white text-[45px] font-extrabold text-center mb-14">Зарегистрироваться</h1>
+				<input title="name" type="text" placeholder="Имя" required className="w-full text-white text-[18px] font-medium bg-[#212a47] rounded-xl p-5 mb-10 outline-none"/>
+				<input title="login" type="text" placeholder="Придумайте логин" required className="w-full text-white text-[18px] font-medium bg-[#212a47] rounded-xl p-5 mb-10 outline-none"/>
+				<input title="password" type="text" placeholder="Придумайте пароль" minLength={4} required className="w-full text-white text-[18px] font-medium bg-[#212a47] rounded-xl p-5 mb-10 outline-none"/>
+				<input title="password" type="text" placeholder="Повторите пароль" minLength={4} required className="w-full text-white text-[18px] font-medium bg-[#212a47] rounded-xl p-5 mb-10 outline-none"/>
+				<input title="email" type="email" placeholder="Почта" required className="w-full text-white text-[18px] font-medium bg-[#212a47] rounded-xl p-5 mb-10 outline-none"/>
+				<button title="submit" type="submit" className="w-full bg-[#F2F60F] text-[22px] font-semibold rounded-xl p-5 mb-5">Зарегистрироваться</button>
+				<div title="singUp" className="w-full bg-[#212a47] flex items-center justify-center cursor-pointer text-white rounded-xl text-[22px] font-semibold p-5">Войти</div>
+			</form>
+		</div> */}
 	</>
     
   );
 };
 
 export default AppLayout;
+
