@@ -5,7 +5,7 @@ import axios from 'axios'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { BsChevronRight } from 'react-icons/bs'
-import { APIkey } from '..'
+import { APIkey } from '../_app'
 
 const index = () => {
 	const [arr1 , setArr1] = useState([])

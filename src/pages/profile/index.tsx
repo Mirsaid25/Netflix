@@ -29,6 +29,8 @@ function index({token}:any) {
 
 	const [sectionInfo, setSectionInfo] = useState("home")
 
+	const [sectionTreeFilter, setSectionTreeFilter] = useState(true)
+
 	const [filterHandleType, setFilterHandleType] = useState(false)
 	const [filterHandleGanre, setFilterHandleGanre] = useState(false)
 
@@ -86,11 +88,11 @@ function index({token}:any) {
 					className={`${sectionInfo === "film" ? "bg-[#3657CB]": "bg-[#191E2E]"} flex items-center justify-center p-9 rounded-xl cursor-pointer shadow-md`}>
                         <Image src={"/icons/user/film 1.svg"} alt="" width={30} height={30}/>
 				</div>
-				<div 
+				{/* <div 
 				    onClick={(e)=> setSectionInfo("person")} 
 					className={`${sectionInfo === "person" ? "bg-[#3657CB]": "bg-[#191E2E]"} flex items-center justify-center p-9 rounded-xl cursor-pointer shadow-md`}>
                         <Image src={"/icons/user/famous (1) 1.svg"} alt="" width={30} height={30}/>
-				</div>
+				</div> */}
 			</div>
 			<div className='w-[91%] min-h-[435px] bg-[#191E2E] rounded-xl shadow-md ml-[9%]'>
 				{
@@ -222,10 +224,10 @@ function index({token}:any) {
 					sectionInfo === "film" ? (
 						<div className='w-full px-[45px] pt-[35px] pb-[60px]'>
 					        <div className='w-full flex items-center justify-between mb-5'>
-                                <h2 className='text-white text-[30px] font-black'>Список фильмов</h2>
+                                <h2 className='text-white text-[30px] font-black'>Список любимых фильмов и сериалов</h2>
 								<div className='flex items-center gap-3'>
-									<p className='text-white text-[18px] font-bold'>Все</p>
-									<p className='text-white text-[18px] font-bold'>Любимые</p>
+									<p onClick={(e)=> setSectionTreeFilter(true)} className={`${sectionTreeFilter ? "text-white" : "text-[#696D77]"}  text-[18px] cursor-pointer font-bold`}>Фильмы</p>
+									<p onClick={(e)=> setSectionTreeFilter(false)} className={`${!sectionTreeFilter ? "text-white" : "text-[#696D77]"} text-[18px] cursor-pointer font-bold`}>Сериалы</p>
 								</div>
 					        </div>
 					        <div className='w-full flex flex-col gap-2'>

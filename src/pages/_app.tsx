@@ -1,26 +1,69 @@
 import Preloader from '@/Components/Preloader'
+import { SessionIdContext } from '@/Contexts/SessionIdContext'
 import '@/styles/globals.css'
+import axios from 'axios'
 import type { AppProps } from 'next/app'
-import { Router } from 'next/router'
-import { useState } from 'react'
+import Link from 'next/link'
+import { Router, useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 
-type arrPopularMoviesProps ={
-
-}
+export const APIkey = "d8c00e564262e291fb38f263b4c7128e"
 
 export default function App({ Component, pageProps }: AppProps) {
-    const [loading, setLoading] = useState(false)
+    const [token, settoken] = useState<string | undefined>()
 
-    Router.events.on('routeChangeStart', (url) => {
-		setLoading(true)
-	  })
-	Router.events.on('routeChangeComplete', (url) => {
-	    setLoading(false)
-	})
+    const [sessionId, setSessionId] = useState<string | undefined>()
 
+    const [userInfo, setUserInfo] = useState<object | undefined>()
+
+    const router = useRouter()
+    
+    const confirmedToken = router.asPath.slice(16,56)
+
+    useEffect(()=>{
+
+        axios.get(`https://api.themoviedb.org/3/authentication/token/new?api_key=${APIkey}`)
+            .then(res => {
+                if(res.status === 200 || res.status === 201){
+                    settoken(res.data.request_token)
+                }
+            })
+            .catch(err=> console.log(err))
+
+        router.asPath.includes("approved=true") ? 
+        (
+            axios.post(`https://api.themoviedb.org/3/authentication/session/new?api_key=${APIkey}` , {"request_token": confirmedToken})
+                .then(res => {
+                    if(res.status === 200 || res.status === 201){
+                        setSessionId(res.data.session_id);
+                        // return res.data.session_id
+                        axios.get(`https://api.themoviedb.org/3/account?api_key=${APIkey}&session_id=${res.data.session_id}`)
+                            .then(res=> {
+                                if(res.status === 200 || res.status === 201){
+                                    setUserInfo(res.data);
+                                }
+                            })
+                    }
+                })
+                .catch(err=> console.log(err))
+        )
+        :
+        null
+    }, [])
+                    
     return (
-        <>
-            {!loading ? (<Component {...pageProps} />) : (<Preloader/>) }
-        </>
-	)
+        token !== undefined ?(
+            sessionId !== undefined ? 
+                (
+                    <SessionIdContext.Provider value={{sessionId, userInfo}}>
+                        <Component {...pageProps} />
+                    </SessionIdContext.Provider>
+                ) 
+                : 
+                <Link href={`https://www.themoviedb.org/authenticate/${token}?redirect_to=http://localhost:3000/`}><h1>fghjkl;lkjhgfcx</h1></Link> 
+        )
+        : 
+        (<Preloader/>)
+	)    
+    
 }

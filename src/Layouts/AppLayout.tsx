@@ -9,9 +9,9 @@ import { IoMdSearch } from "react-icons/io";
 import { MdClose } from "react-icons/md";
 import ActorFilms from "@/Components/actor_childs/ActorFilmsComponent";
 import axios from "axios";
-import { APIkey } from "@/pages";
 import SearchComponent from "@/Components/SearchComponent";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { APIkey } from "@/pages/_app";
 
 type AppLayoutProps = {
   children: React.ReactNode;
@@ -25,8 +25,6 @@ type Inputs = {
 const AppLayout = ({ children }: AppLayoutProps) => {
     const [modalHandle, setModalHandle] = useState<boolean>(false)
     const [loading, setLoading] = useState(false)
-    const [token, settoken] = useState("")
-    const [sessionId, setSessionId] = useState("")
 
 
     const [searchHandle, setSearchHandle] = useState(false)

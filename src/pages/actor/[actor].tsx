@@ -8,9 +8,9 @@ import { BsChevronRight } from 'react-icons/bs';
 import { FaHeart } from 'react-icons/fa';
 import { IoMdMenu } from 'react-icons/io';
 import { createTheme, Pagination } from '@mui/material'
-import { APIkey } from '..';
 import SectionOneItem from '@/Components/index_child/sectionOneItem';
 import ActorFilms from '@/Components/actor_childs/ActorFilmsComponent';
+import { APIkey } from '../_app';
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	const router = query.id;

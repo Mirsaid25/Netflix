@@ -8,7 +8,7 @@ import Image from "next/image";
 import { AiFillDislike, AiFillLike } from "react-icons/ai";
 import {FaHeart } from "react-icons/fa";
 import { GetServerSideProps } from "next";
-import { APIkey } from "..";
+import { APIkey } from "../_app"; 
 import Actiors from "@/Components/[indexId]_child/Actior";
 import { Swiper, SwiperSlide } from 'swiper/react'; 
 import {Scrollbar } from "swiper";

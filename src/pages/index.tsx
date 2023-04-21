@@ -1,7 +1,7 @@
 // import SectionOneItem from "@/Components/index_child/sectionOneItem";
 import AppLayout from "@/Layouts/AppLayout";
 import { Inter } from "@next/font/google";
-import {useEffect, useState } from "react";
+import {useContext, useEffect, useState } from "react";
 import { AiOutlineMinus } from 'react-icons/ai';
 import { IoMdMenu } from "react-icons/io";
 import { MdOutlineClose } from "react-icons/md";
@@ -21,12 +21,12 @@ import axios from "axios";
 import dynamic from 'next/dynamic'
 import MyLoader from "@/Components/MyLoader";
 import Link from "next/link";
+import { APIkey } from "./_app";
+import { SessionIdContext } from "@/Contexts/SessionIdContext";
 
 const SectionOneItem = dynamic(() => import('@/Components/index_child/sectionOneItem'), {
   loading: () => <p className="text-[white] font-black text-[50px]">{<MyLoader/>}</p>,
 })
-
-export const APIkey = "d8c00e564262e291fb38f263b4c7128e"
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -63,6 +63,11 @@ export default function Home() {
 	const [trailerName, setTrailerName] = useState<string>("John Wick: Chapter 4")
 	
 	const size:number|null = useWindowSize().innerWidth
+
+	const sessionId = useContext(SessionIdContext)
+
+	console.log(sessionId);
+	
 
 	useEffect(() => {
 	    axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=${APIkey}&language=en-US&page=1`)
