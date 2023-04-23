@@ -80,7 +80,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 
 const indexid = ({data , crew, tralerKeys, similar, ganreArr}: any) => {	
 
-	const [like, setLike] = useState(false)
+	const [like,setLike] = useState<boolean>(false)
 
     const tralerKey = tralerKeys?.results?.filter((item: any) => {
 		if(item?.type === "Trailer"){

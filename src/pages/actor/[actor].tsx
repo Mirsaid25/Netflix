@@ -55,8 +55,8 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 const actor = ({data ,credits , images , ganres, search}:any) => {
 	console.log(search);
 
-	const [selectOne, setSelectOne] = useState<boolean>(true)
-	const [bestFilms, setbestFilms] = useState<object[]>(credits?.cast?.slice(0,4))
+	const [selectOne,setSelectOne] = useState<boolean>(true)
+	const [bestFilms,setbestFilms] = useState<object[]>(credits?.cast?.slice(0,4))
 
 	// const bestFilms:object = credits?.cast?.slice(0,20)
 	

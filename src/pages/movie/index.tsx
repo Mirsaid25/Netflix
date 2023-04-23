@@ -7,13 +7,13 @@ import { BsChevronRight } from 'react-icons/bs'
 import { APIkey } from '../_app' 
 
 const index =()=> {
-	const [arr , setArr] = useState([])
-	const [filteredArr , setFilteredArr] = useState([])
+	const [arr,setArr] = useState([])
+	const [filteredArr,setFilteredArr] = useState([])
 
-	const [ganreArr , setGanreArr] = useState<any>([])
-	const [ganreActive , setGanreActive] = useState([{id:0}])
+	const [ganreArr,setGanreArr] = useState<object[] | null>([])
+	const [ganreActive,setGanreActive] = useState([{id:0}])
 
-	const [filterHandle , setFilterHandle] = useState(false)
+	const [filterHandle,setFilterHandle] = useState<boolean>(false)
 
 
     useEffect(() => {
@@ -87,7 +87,7 @@ const index =()=> {
 							<img src="/icons/filter_icon.svg" alt="" className={filterHandle ? 'w-[11px] h-[11px] max-md:w-[9px] max-md:h-[9px]' :'w-[11px] h-[11px] max-md:w-[9px] max-md:h-[9px] rotate-180' } />
 						</div>
 						<div className='flex flex-col gap-3 max-md:gap-2'>
-							{ganreArr.length >0 ?  ganreArr?.map((item:any) =>(
+							{ganreArr !== null ?  ganreArr?.map((item:any) =>(
 								<div className='flex items-center gap-2 max-md:gap-1'>
 							        <input onClick={(e) => filtering(e.target)} type="checkbox" name={item.name} title={item.id} id="" 
 									   className='w-4 h-4 max-md:w-3 max-md:h-3 cursor-pointer'/>
@@ -96,7 +96,6 @@ const index =()=> {
 							)):
 						       null 
 						    }
-							
 						</div>
 				</div>
 			</div>

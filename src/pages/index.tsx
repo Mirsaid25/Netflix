@@ -66,7 +66,7 @@ export default function Home() {
 
 	const sessionId = useContext(SessionIdContext)
 
-	console.log(sessionId);
+	// console.log(sessionId);
 	
 
 	useEffect(() => {

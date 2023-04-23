@@ -8,12 +8,12 @@ import { BsChevronRight } from 'react-icons/bs'
 import { APIkey } from '../_app'
 
 const index = () => {
-	const [arr1, setArr1] = useState<[] | null>()
-	const [arr2, setArr2] = useState<[] | null>()
-	const [arr3, setArr3] = useState<[] | null>()
-	const [arr4, setArr4] = useState<[] | null>()
-	const [arr5, setArr5] = useState<[] | null>()
-	const [arr6, setArr6] = useState<[] | null>()
+	const [arr1,setArr1] = useState<[] | null>()
+	const [arr2,setArr2] = useState<[] | null>()
+	const [arr3,setArr3] = useState<[] | null>()
+	const [arr4,setArr4] = useState<[] | null>()
+	const [arr5,setArr5] = useState<[] | null>()
+	const [arr6,setArr6] = useState<[] | null>()
  
 	useEffect(() => {
 		axios.get(`https://api.themoviedb.org/3/person/popular?api_key=${APIkey}&language=en-US&page=1`)

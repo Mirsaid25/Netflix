@@ -6,7 +6,7 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
 import { BsInstagram, BsTwitter, BsYoutube } from 'react-icons/bs';
 import { FaFacebookF } from 'react-icons/fa';
-import { APIkey } from '..';
+import { APIkey } from '../_app';
 
 // export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 // 	const token = query.request_token;	

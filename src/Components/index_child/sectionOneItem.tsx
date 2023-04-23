@@ -11,21 +11,21 @@ type SectionOneItemProps= {
 	genre_ids:[],
   id:number
   },
-  arrId:[],
+  arrId:object[] | null,
   type:string
 }
 
 const SectionOneItem: React.FC<SectionOneItemProps> = ({arr, arrId, type}) => {
   const [hover, setHover] = useState<boolean>(false); 
 
-    const ganre =  arrId.filter((item: any) => {
+    const ganre =  arrId?.filter((item: any) => {
 	    for(let items of arr.genre_ids){
 			if(item.id === items){
 				return item
 	    	}
 	    }
     })
-    
+
   return (
     <div className="move_card">
         <div
@@ -54,7 +54,9 @@ const SectionOneItem: React.FC<SectionOneItemProps> = ({arr, arrId, type}) => {
             </div>
         </div>
         <p className="text-white text-[18px] max-lg:text-[15px] font-bold mb-1">{arr?.original_title}</p>
-        <p className="text-[#F2F60F] text-[15px] max-lg:text-[12px]">{ganre.map((item:{name:string}) => `${item?.name[0].toUpperCase() + item?.name.slice(1)}, `)}</p>
+        <p className="text-[#F2F60F] text-[15px] max-lg:text-[12px]">{
+            //  ganre !== undefined ? (ganre.map((item:{name:string}) => `${item?.name[0].toUpperCase() + item?.name.slice(1)}, `)): null
+        }</p>
     </div>
   );
 };
