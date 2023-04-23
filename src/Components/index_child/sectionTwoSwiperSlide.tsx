@@ -6,7 +6,7 @@ import { SwiperSlide } from "swiper/react";
 type sectionTwoSwiperSlideProps ={}
 
 const sectionTwoSwiperSlide: React.FC = () => {
-    const [sectionTwoItem, setSectionTwoItem] = useState(false)
+    const [sectionTwoItem, setSectionTwoItem] = useState<boolean>(false)
 
   return (
     <SwiperSlide>

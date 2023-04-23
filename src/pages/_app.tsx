@@ -67,7 +67,6 @@ export default function App({ Component, pageProps }: AppProps) {
                         </Link> 
                     </div>
                 )
-                // 
         )
         : 
         (<Preloader/>)

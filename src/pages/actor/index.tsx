@@ -34,7 +34,7 @@ const index = () => {
 	    axios.get(`https://api.themoviedb.org/3/person/popular?api_key=${APIkey}&language=en-US&page=6`)
 		    .then(res6 => setArr6(res6.data.results))
 	  
-	}, [])
+	},[])
 	
   return (
     <AppLayout>
