@@ -7,13 +7,13 @@ import { BsChevronRight } from 'react-icons/bs'
 import { APIkey } from '../_app' 
 
 const index =()=> {
-	const [arr , setArr] = useState([])
-	const [filteredArr , setFilteredArr] = useState([])
+	const [arr, setArr] = useState([])
+	const [filteredArr, setFilteredArr] = useState([])
 
-	const [ganreArr , setGanreArr] = useState<any>([])
-	const [ganreActive , setGanreActive] = useState([{id:0}])
+	const [ganreArr, setGanreArr] = useState<any>([])
+	const [ganreActive, setGanreActive] = useState([{id:0}])
 
-	const [filterHandle , setFilterHandle] = useState(false)
+	const [filterHandle, setFilterHandle] = useState(false)
 
 
     useEffect(() => {
