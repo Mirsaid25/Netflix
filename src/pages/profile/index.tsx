@@ -1,9 +1,9 @@
+import { SessionIdContext } from '@/Contexts/SessionIdContext';
 import AppLayout from '@/Layouts/AppLayout';
 import axios from 'axios';
-import { GetServerSideProps } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { BsInstagram, BsTwitter, BsYoutube } from 'react-icons/bs';
 import { FaFacebookF } from 'react-icons/fa';
 import { APIkey } from '../_app';
@@ -24,8 +24,7 @@ import { APIkey } from '../_app';
 // 	};
 //   };
 
-function index({token}:any) {
-	const [sessionId, setSessionId] = useState("null")
+function index() {
 
 	const [sectionInfo, setSectionInfo] = useState("home")
 
@@ -34,41 +33,9 @@ function index({token}:any) {
 	const [filterHandleType, setFilterHandleType] = useState(false)
 	const [filterHandleGanre, setFilterHandleGanre] = useState(false)
 
-    // console.log(sessionId);
+	const {userInfo}:any = useContext(SessionIdContext)
 
-	// useEffect(() => {
-	// 	if(token.length > 1){
-	// 		axios.post(`https://api.themoviedb.org/3/authentication/session/new?api_key=${APIkey}`, {"request_token": token})
-	//             .then(res=> {
-	// 					        if(res.status === 200 || res.status === 201 || res.data.success === true){
-	// 					        	console.log(res.data);
-						        	
-	// 		    		        	setSessionId(res.data.session_id)
-	// 		    		        }
-    //     					}
-	// 			)
-	// 			.catch(err=> console.log(err))
-	// 	}
-	// }, [token])//
-	
-    // useEffect(() => {
-	// 	if(sessionId !== "null"){
-	// 		axios.get(`https://api.themoviedb.org/3/account?api_key=${APIkey}&session_id=${sessionId}`)
-	// 			.then(res => {
-	// 				console.log(res.data);
-					
-	// 				axios.get(`https://api.themoviedb.org/3/account/${res.data.id}/lists?api_key=${APIkey}&language=en-US&session_id=${sessionId}&page=1`)
-	// 			        .then(res => console.log(res.data))
-	// 			})
-			
-	// 	}
-	// }, [sessionId])
-
-
-	// if(sessionId.length > 0){
-		// 	axios.get(`https://api.themoviedb.org/3/account?api_key=${APIkey}&session_id=${sessionId}`)
-		// 		.then(res => console.log(res.data))
-		// }
+    
   return (
 	<AppLayout>
 		<div className='w-full relative'>
@@ -103,10 +70,10 @@ function index({token}:any) {
 					        </div>
 					        <div className='w-full flex gap-[30px]'>
                                 <div className='w-[40%]'>
-                                    <img src={`/image/user/IMG_20211222_122841_719.jpg`} alt="" className='w-full h-auto rounded-xl' />
+                                    <img src={`https://image.tmdb.org/t/p/w500/${userInfo.avatar.tmdb.avatar_path}`} alt="" className='w-full h-auto rounded-xl' />
 					        	</div>
 					        	<div className='w-1/2'>
-                                    <h1 className='text-[50px] mb-2 text-white font-black'>Мирсаид</h1>
+                                    <h1 className='text-[50px] mb-2 text-white font-black'>{userInfo.name}</h1>
 					        		<div className='flex items-center gap-3 mb-4'>
 					        			<Link href={"#"}>
 					        				<div className='w-8 h-8 flex items-center justify-center rounded-full bg-[#1E2538] border-[#2B354E] border-2'>
@@ -137,7 +104,7 @@ function index({token}:any) {
 					        	    			    Пол:
                                                 </th>
                                                 <td className="py-4 text-[18px] text-[#F2F60F] ">
-                                                    "dfghjkl"
+                                                    Мужской
                                                 </td>
                                             </tr>
 				                    		<tr>
@@ -145,7 +112,7 @@ function index({token}:any) {
                                                     День рождения:
                                                 </th>
                                                 <td className="py-4 text-[18px] text-[#F2F60F] ">
-				                    			    "rftgyhujkl;"
+				                    			    01.10.2005
                                                 </td>
                                             </tr>
 					        	    		<tr>
@@ -153,15 +120,15 @@ function index({token}:any) {
 					        	    			    Страна:
                                                 </th>
                                                 <td className="py-4 text-[18px] text-[#F2F60F] ">
-				                    			    "qwertyhjkl"
+				                    			    {userInfo.iso_3166_1}
                                                 </td>
                                             </tr>
 					        				<tr>
                                                 <th className="py-4 text-[18px] font-bold text-white pr-10">
-					        	    			    Город:
+												    Пользовательская имя:
                                                 </th>
                                                 <td className="py-4 text-[18px] text-[#F2F60F] ">
-				                    			    "qwertyhjkl"
+				                    			    {userInfo.username}
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -186,7 +153,7 @@ function index({token}:any) {
 				                    	</div>
 				                    	<div className='flex flex-col gap-3 max-md:gap-2'>
 				                    		    <div className='flex items-center gap-2 max-md:gap-1'>
-				                    		        <input  type="radio" checked name={"radio"} title={""} id="" 
+				                    		        <input  type="radio" defaultChecked name={"radio"} title={""} id="" 
 				                    		    	   className='w-4 h-4 max-md:w-3 max-md:h-3 cursor-pointer'/>
                                                     <p className='text-white text-[15px]'>Фильмы</p>
 				                    		    </div>
